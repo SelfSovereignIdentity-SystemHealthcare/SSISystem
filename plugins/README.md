@@ -1,8 +1,7 @@
-# Traction Aca-Py Plugins
+# Plugins Traction Aca-Py
 
-Traction is a set of plugins that facilitate multi-tenant management within [Aca-Py](https://github.com/hyperledger/aries-cloudagent-python). Some of the plugins ([basicmessage_storage](./basicmessage_storage/README.md), [connection_update](./connection_update/README.md) and [multitenant_provider](./multitenant_provider/README.md)) can be used independently from Traction.  
+Traction é um conjunto de plugins que facilitam a gestão multi-tenant dentro do Aca-Py. Alguns dos plugins (armazenamento_de_mensagem_básica, atualização_de_conexão e provedor_multitenant) podem ser usados independentemente do Traction.
 
+### Desenvolvendo Plugins Aca-Py
 
-### Developing Aca-Py Plugins
-
-Please refer to [Getting Started Aries Development: Plugins](https://github.com/hyperledger/aries-cloudagent-python/blob/45c832658245747a3366735f6179362d127bae02/docs/GettingStartedAriesDev/PlugIns.md) for an in depth look at how to build Aca-Py plugins and how they operate within Aca-Py.
+Por favor, consulte Introdução ao Desenvolvimento Aries: Plugins para um olhar aprofundado sobre como construir plugins Aca-Py e como eles operam dentro do Aca-Py.

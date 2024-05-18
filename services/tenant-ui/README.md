@@ -1,31 +1,27 @@
-# Traction Tenant UI
+# Interface de Usuário do Tenant Traction
 
-## Overview
+## Visão Geral
 
-The Tenant UI is a frontend web dashboard that will authenticate a wallet key/secret and allow a user to make calls for that wallet to the Traction API.
+A Interface de Usuário do Tenant é um painel web frontend que autenticará uma chave/segredo de carteira e permitirá que um usuário faça chamadas para essa carteira para a API Traction.
 
-The architechture consists of
+A arquitetura consiste em:
 
-- A Node app that serves the frontend, handles environment configuration, and can provide any minimal Tenant-UI-specific business functionality (like sending an email or something)
-- A Vue3 frontend app providing the UI
+- Um aplicativo Node que serve o frontend, lida com a configuração do ambiente e pode fornecer qualquer funcionalidade mínima específica da Interface de Usuário do Tenant (como enviar um e-mail ou algo assim)
+- Um aplicativo frontend Vue3 fornecendo a UI
 
-![Arch Diagram](/docs/assets/tenant-ui-flow-chart-svg.svg)
+<img src="../../docs/assets/tenantUiArchitecture.png">
 
-## Set up your configuration
+## Configurando sua Configuração
 
-In tenant-ui/config add a `local.json` file to add any specific config you'd like for your local instance (otherwise see `default.json` for defaults). At this point the only thing you'll probably want to override is the Traction URL. So your local.json can just look like this for example:
+Em tenant-ui/config adicione um arquivo `local.json` para adicionar qualquer configuração específica que você gostaria para sua instância local (caso contrário, veja `default.json` para os padrões). Neste ponto, a única coisa que você provavelmente vai querer substituir é a URL do Traction. Então, seu local.json pode parecer assim, por exemplo:
 
-```
-{
-  "server": {
-    "tractionUrl": "https://traction-api-test.apps.silver.devops.gov.bc.ca/"
-  }
-}
-```
+{ “server”: { “tractionUrl”: “https://traction-api-test.apps.silver.devops.gov.bc.ca/” } }
 
-## Running the App
 
-To just start up the app on your local navigate a terminal to `services/tenant-ui/` and install the libraries
+
+## Executando o Aplicativo
+
+Para simplesmente iniciar o aplicativo localmente, navegue em um terminal até `services/tenant-ui/` e instale as bibliotecas
 
 ```bash
 npm ci
@@ -33,116 +29,106 @@ cd frontend
 npm ci
 ```
 
-start the API from `services/tenant-ui/`
+inicie a API de services/tenant-ui/
 
 ```bash
 npm run start
 ```
 
-This starts up the API and builds the FE and serves the frontend from [here](localhost:8080)
+Isso inicia a API e constrói o FE e serve o frontend a partir daqui aqui
 
-## Developing
-
-To develop the backend and frontend you'll want hot-reloading and the 2 things run as separate processes so from `services/tenant-ui/` run
-
-```bash
-npm ci
-npm run dev
-```
-
-and then in a separate terminal in `services/tenant-ui/frontend`
+## Desenvolvendo
+Para desenvolver o backend e o frontend, você vai querer recarregamento rápido e as 2 coisas funcionam como processos separados, então de services/tenant-ui/ execute
 
 ```bash
 npm ci
 npm run dev
 ```
 
-The Vite hot-module-reload app will serve from [here](http://127.0.0.1:5173/).
-
-### Running Tests
-
-To Run tests simply execute
+e então em um terminal separado em services/tenant-ui/frontend
 
 ```bash
-  npm run test
+npm ci
+npm run dev
 ```
 
-In addition to running tests this will also produce code coverage statistics.
+O aplicativo Vite de recarga de módulo rápido servirá a partir daqui aqui.
 
-To test your changes in the same environment you would see in production use
+## Executando Testes
+Para executar testes simplesmente execute
 
 ```bash
-    npm run build
-    npm run start
+npm run test
 ```
 
-## Using docker
+Além de executar testes, isso também produzirá estatísticas de cobertura de código.
 
-Build and run a docker image (example shows using environment variable to point at a specific Traction Instance)
+Para testar suas alterações no mesmo ambiente que você veria na produção, use
+
+```bash
+npm run build
+npm run start
+```
+
+## Usando docker
+Construa e execute uma imagem docker (o exemplo mostra o uso de variável de ambiente para apontar para uma Instância Traction específica)
 
 ```bash
 docker build . -t local/traction-ui
 docker run --env SERVER_TRACTION_URL=https://traction-api-test.apps.silver.devops.gov.bc.ca/ FRONTEND_TENANT_PROXY_URL=https://traction-tenant-proxy-test.apps.silver.devops.gov.bc.ca/ -p 8080:8080 -d local/traction-ui
 ```
 
-## Internationalization
+## Internacionalização
+A Interface de Usuário do Tenant usa Vue I18n para lidar com a internacionalização para o aplicativo Vue.
 
-The Tenant UI uses [Vue I18n](https://vue-i18n.intlify.dev/) to handle internationalization for the Vue app.
+Quando estiver desenvolvendo, revise a documentação para a sintaxe básica dessa biblioteca rapidamente para entender os recursos de localização usados. As configurações de internacionalização são tratadas na pasta i18n e as traduções são mantidas em arquivos json para cada idioma lá.
 
-When developing, review the [documentation](https://vue-i18n.intlify.dev/guide/essentials/syntax.html) for the basic syntax for that library quickly to understand the localization features used. Internatonalization settings are handled in the `i18n` folder and translations are kept in `json` files for each language there.
+Quando estiver desenvolvendo a Interface de Usuário do Tenant, adira às melhores práticas de localização, incluindo:
 
-When developing the Tenant UI, adhere to localization best practices including
+Não trate nenhuma lógica de localização ou traduções nos próprios componentes. O código frontend deve lidar apenas com nomes de strings de mensagens, e todas as localizações devem ser tratadas exclusivamente nos arquivos de idiomas json.
+Use princípios de design responsivo adequados e não espaçe os componentes da UI com base nos comprimentos de texto do idioma inglês. Elementos da UI traduzidos podem acabar sendo mais curtos ou muito mais longos, então os desbordamentos de texto devem sempre funcionar de acordo.
+Atualmente, a localização é tratada no nível do frontend da Interface de Usuário do Tenant, mas os dados que retornam ao frontend das APIs Traction e AcaPy podem não incluir localização de texto e códigos de status, etc. Como tal, a localização completa é um trabalho em andamento e exigirá algum trabalho futuro na integração com Traction e AcaPy.
 
-- Do not handle any localization logic or translations in the components themselves. The frontend code should only deal with message string names, and all localizations should be handled exclusively in the language `json` files.
-- Use proper responsive design principles, and do not space UI components based on english language text lengths. Translated UI elements might end up shorter or much longer, so overflows of text should always work accordingly.
+Para garantir que os arquivos de idiomas sejam consistentes entre si, scripts auxiliares adicionais foram adicionados:
 
-Currently localization is handled at the Tenant UI frontend level, but data that returns to the frontend from the Traction and AcaPy APIs may not include localization of text and status codes, etc. As such, full localization is a work in progress and will require some future work in integrating with Traction and AcaPy.
+* fill-keys pega tudo em en.json e preenche os outros arquivos de idiomas com as entradas sufixadas pelo código do idioma.
+* common-keys olha quais chaves apontam para os mesmos valores para que possam ser refatorados em uma chave comum.
+* sort-keys faz exatamente o que diz
 
+Para executar qualquer um desses scripts, navegue até services/tenant-ui/frontend e execute
 
-To ensure that the language files are consistent with each other additional helper scripts have been added
-
-- `fill-keys` takes everything in en.json and fills the other lang files with the entries suffixed by the locale code.
-- `common-keys` looks at which keys point to the same values so they can be refactored into a common key.
-- `sort-keys` does exactly what it says
-
-To execute any of these scripts navigate to `services/tenant-ui/frontend` and execute
-
-```
+```bash
 npm run i18n:fill-keys
 ```
 
-Replacing `fill-keys` with which ever script your would like to run
+Substituindo fill-keys por qualquer script que você gostaria de executar
 
-## OIDC Login for Innkeeper
+## Login OIDC para Innkeeper
+A funcionalidade Innkeeper da Interface de Usuário do Tenant pode ser configurada para fazer login com (ou ambos)
 
-The Tenant UI Inkeeper functionality can be configured to log in with either (or both)
-- the Innkeeper secret
-- a configured OIDC provider
+o segredo do Innkeeper
+um provedor OIDC configurado
+Para configurar o provedor OIDC de sua escolha, adicione valores de configuração em seu deployment para corresponder aos campos frontend.innkeeperOidc para um cliente de concessão de código de autenticação e configure os campos server.oidc apropriadamente para verificar o JWKS para tokens desse cliente.
 
-To set up the OIDC provider of your choice, add configuration values in your deployment to match the `frontend.innkeeperOidc` fields for a auth code grant client,a nd configure the `server.oidc` fields appropriately to veify the JWKS for tokens from that client. 
+Além disso, o segredo do Innkeeper deve estar disponível para o servidor da Interface de Usuário do Tenant, isso é definido na configuração server.innkeeper…
 
-As well, the Innkeeper secret must be available to the Tenant UI server, this is set in `server.innkeeper` configuration...
+## Simulação de E-mail
+O e-mail é usado em vários componentes do tenent-ui para fins de desenvolvimento incluímos maildev para ajudar com o monitoramento e simulação desses e-mails no lugar de um servidor SMTP adequado.
 
-## Email Mocking
+Para habilitar isso, defina as seguintes variáveis de ambiente antes de iniciar o tenant-ui
 
-Email is used in multiple components of `tenent-ui` for development
-purposes we have included [maildev](https://maildev.github.io/maildev/) to assist with monitoring and
-mocking these emails in place of a proper SMTP server.
+SERVER_SMTP_SERVER=maildev
+SERVER_SMTP_PORT=1025
+Para visualizar os e-mails enviados, abra http://localhost:1080/ no seu navegador web
 
-To enable this set the following environment variables before starting the `tenant-ui`
-- `SERVER_SMTP_SERVER=maildev`
-- `SERVER_SMTP_PORT=1025`
+Por padrão, isso já está configurado no arquivo docker-compose. Para uso local, você precisará iniciar o maildev manualmente.
 
-To view the emails being sent open http://localhost:1080/ in your web browser
+Configurando Matomo
+Se você gostaria de usar Matomo para rastreamento, você pode definir a variável de ambiente FRONTEND_MATOMO_URL conforme exposto em custom-environment-variables.json
 
-By default this is already configured in the docker-compose file. For
-local use you will need to start `maildev` manually.
+Se nenhum valor for definido usando qualquer um desses métodos, o código de rastreamento MATOMO nunca será carregado.
 
-## Configuring Matomo
 
-If you would like to use Matomo for tracking you can set the FRONTEND_MATOMO_URL environment variable as exposed in [custom-environment-variables.json](../config/custom-environment-variables.json)
 
-If no value is set using either of these methods MATOMO tracker code will never be loaded.
 
-For more information on configuration settings see
-[Set up your configuration](https://github.com/bcgov/traction/tree/main/services/tenant-ui#set-up-your-configuration)
+

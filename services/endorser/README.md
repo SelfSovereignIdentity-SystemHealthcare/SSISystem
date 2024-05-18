@@ -1,17 +1,17 @@
-# Endorser Services
+# Serviços de Endossador
 
-Endorser services are built using [FastAPI](https://fastapi.tiangolo.com/).
+Os serviços de endossador são construídos usando [FastAPI](https://fastapi.tiangolo.com/).
 
-To install local dependencies:
+Para instalar as dependências locais:
 
 ```shell
 pip install -r requirements.txt
 gunicorn -k uvicorn.workers.UvicornWorker -b localhost:5000  api.main:app
 ```
 
-To run linting and tests locally (these are executed automatically for each PR):
+Para executar a verificação de estilo e os testes localmente (esses são executados automaticamente para cada PR):
 
-```shell
+```sh
 pip install tox
 tox -e lint
 tox -e test

@@ -1,24 +1,23 @@
-# Traction Documentation and Resources
+# Documentação e Recursos do SSISH
 
-## A Traction Sandbox Hyperledger Aries/AnonCreds Workshop
+## Um Workshop do SSISH Sandbox Hyperledger Aries/AnonCreds
 
-This workshop contains a sequence of labs demonstrating issuing, receiving,
-holding, requesting, presenting, and verifying AnonCreds Verifiable
-Credentials--no technical experience required! The labs take about 20 minutes
-for complete. New developers expecting to build an Issuer or Verifier with
-[Traction] or [Aries Cloud Agent Python] will find this a great place to
-start--with developer-oriented "Next Steps" suggested at the end of the
+Este workshop contém uma sequência de laboratórios demonstrando a emissão, recebimento,
+posse, solicitação, apresentação e verificação de Credenciais Verificáveis AnonCreds
+— não é necessário experiência técnica! Os laboratórios levam cerca de 20 minutos
+para serem completados. Novos desenvolvedores que esperam construir um Emissor ou Verificador com
+[SSISH] ou [Agente de Nuvem Aries Python] acharão este um ótimo ponto de
+partida — com "Próximos Passos" orientados para desenvolvedores sugeridos no final do
 Workshop.
 
-[Traction]: https://digital.gov.bc.ca/digital-trust/technical-resources/traction/
-[Aries Cloud Agent Python]: https://aca-py.org
+[SSISH]: https://digital.gov.bc.ca/digital-trust/technical-resources/SSISH/
+[Agente de Nuvem Aries Python]: https://aca-py.org
 
-## Basic Architecture Overview
-See [traction flow chart](assets/traction-flow-chart-1600x900-12162022.pdf)
+## Visão Geral da Arquitetura Básica
+Veja fluxograma do SSISH
 
-## Use Cases
+## Casos de Uso
 
-* [Tenant Onboarding](USE-CASE-ONBOARD.md)
-* [API Keys](USE-CASE-API-KEY.md)
+* Integração de Inquilinos
+* Chaves de API
 
-Stay tuned for upcoming project documentation.
