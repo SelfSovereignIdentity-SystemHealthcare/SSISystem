@@ -1,0 +1,76 @@
+{
+  "frontend": {
+    "tenantProxyPath": "http://localhost:8032",
+    "apiPath": "api/",
+    "basePath": "/",
+    "showDeveloper": true,
+    "showInnkeeperReservationPassword": true,
+    "showInnkeeperAdminLogin": true,
+    "showOIDCReservationLogin": false,
+    "showWritableComponents": true,
+    "quickConnectEndorserName": "",
+    "requireEmailForReservation": true,
+    "session": {
+      "timeoutSeconds": "600",
+      "countdownSeconds": "30"
+    },
+    "oidc": {
+      "active": false,
+      "authority": "https://dev.loginproxy.gov.bc.ca/auth/realms/digitaltrust-citz",
+      "client": "innkeeper-frontend",
+      "label": "IDIR",
+      "extraQueryParams": {}
+    },
+    "ux": {
+      "appTitle": "Traction Tenant Console",
+      "appInnkeeperTitle": "Traction Innkeeper Console",
+      "sidebarTitle": "TRACTION",
+      "copyright": "",
+      "owner": "",
+      "coverImageCopyright": "Photo by Kristoffer Fredriksson on StockSnap",
+      "aboutBusiness": {
+        "title": "Government of British Columbia",
+        "linkTitle": "BC Digital Trust Service Agreement",
+        "link": "https://github.com/bcgov/bc-vcpedia/blob/main/agents/bc-gov-agent-service.md",
+        "imageUrl": "/img/bc/bc_logo.png"
+      },
+      "infoBanner": {
+        "message": "",
+        "messageLevel": "info",
+        "showMessage": false
+      }
+    }
+  },
+  "image": {
+    "buildtime": "",
+    "tag": "tenant-ui:default",
+    "version": "default"
+  },
+  "server": {
+    "apiPath": "/api",
+    "basePath": "/",
+    "bodyLimit": "30mb",
+    "logLevel": "http",
+    "port": "8080",
+    "staticFiles": "../../frontend/dist",
+    "tractionUrl": "http://localhost:5100",
+    "oidc": {
+      "jwksUri": "https://dev.loginproxy.gov.bc.ca/auth/realms/digitaltrust-citz/protocol/openid-connect/certs",
+      "realm": "digitaltrust-citz",
+      "roleName": "innkeeper"
+    },
+    "innkeeper": {
+      "user": "innkeeper",
+      "key": "change-me"
+    },
+    "smtp": {
+      "server": "apps.smtp.gov.bc.ca",
+      "port": 25,
+      "secure": false,
+      "user": "",
+      "password": "",
+      "senderAddress": "DoNotReplyTraction@gov.bc.ca",
+      "innkeeperInbox": "lucas.o'neil@gov.bc.ca"
+    }
+  }
+}

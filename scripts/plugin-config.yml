@@ -1,0 +1,35 @@
+multitenant_provider:
+  manager:
+    class_name: "multitenant_provider.v1_0.manager.AskarMultitokenMultitenantManager"
+    always_check_provided_wallet_key: true
+  errors:
+    on_unneeded_wallet_key: false
+  token_expiry:
+    units: days
+    amount: 1
+
+traction_innkeeper:
+  innkeeper_wallet:
+    tenant_id: innkeeper
+    wallet_name: traction_innkeeper
+    wallet_key: change-me
+    print_key: true
+    print_token: true
+    connect_to_endorser: [
+      {
+        "endorser_alias": "bcovrin-test-endorser",
+        "ledger_id": "bcovrin-test",
+      },
+      {
+        "endorser_alias": "bcovrin-dev-endorser",
+        "ledger_id": "bcovrin-dev",
+      }
+    ]
+    create_public_did: ["bcovrin-test", "bcovrin-dev"]
+  reservation:
+    auto_approve: true
+    expiry_minutes: 2880
+    auto_issuer: true
+
+basicmessage_storage:
+  wallet_enabled: true

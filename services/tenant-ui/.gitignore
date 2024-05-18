@@ -1,0 +1,30 @@
+# Credentials
+.env
+
+# Configurations
+.venv
+!.vscode/*
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+.idea
+config/local.json
+
+# Temporary files
+*.log
+*.swp
+*.zip
+*.tgz
+schema.ts
+
+# Temporary Code
+node_modules
+dist
+
+# Test data
+frontend/public/test_schemas.json
+coverage/*
+
+# helper scripts
+.utils

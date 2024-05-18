@@ -1,0 +1,20 @@
+{
+  "formDataSchema": {
+    "type": "object",
+    "properties": {
+      "organization": {
+        "type": "string"
+      }
+    }
+  },
+  "formUISchema": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/organization",
+        "label": "Company/organization "
+      }
+    ]
+  }
+}

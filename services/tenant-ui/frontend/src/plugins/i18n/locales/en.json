@@ -1,0 +1,559 @@
+{
+  "about": {
+    "about": "Sobre",
+    "acaPy": {
+      "acaPy": "ACA-Py",
+      "acapyVersion": "Versão do ACA-Py {version}",
+      "info": "Informações de versão para ACA-Py",
+      "ledger": "Livro Razão",
+      "ledgerBrowser": "Navegador do Livro Razão",
+      "plugins": "Lista de Plugins Instalados",
+      "tailsServer": "Servidor Tails"
+    },
+    "traction": {
+      "imageCreated": "Imagem criada em",
+      "imageTag": "Tag da imagem",
+      "imageVersion": "Versão da imagem",
+      "info": "Informações de versão/hospedagem para TRACTION",
+      "repository": "Repositório do GitHub para Traction",
+      "swagger": "URL do Swagger",
+      "traction": "Tração",
+      "tractionVersion": "Versão da Tração {version}",
+      "uiVersion": "Versão da UI do Inquilino {version}",
+      "url": "URL da Tração"
+    }
+  },
+  "admin": {
+    "adminKey": "Chave de Admin",
+    "adminName": "Nome do Admin",
+    "error": "ERRO",
+    "orRequestAccessWith": "Ou Solicite Acesso Com",
+    "orSignInWith": "Ou Faça Login Com"
+  },
+  "apiKey": {
+    "alias": "Alias para Chave",
+    "apiKeys": "Chaves de API",
+    "createApiKey": "Criar Chave de API",
+    "createSuccess": "Chave de API criada",
+    "delete": "Excluir Chave de API",
+    "deleteConfirmation": "Tem certeza de que deseja excluir esta Chave de API?",
+    "deleteSuccess": "Chave de API excluída",
+    "docs": "O ID do Inquilino e a Chave de API podem ser usados para obter um token de acesso no endpoint de Token de Multilocação.",
+    "docsSwagger": "A documentação da API pode ser encontrada aqui:",
+    "generatedKey": "A chave de API gerada é mostrada abaixo. Este diálogo é a única vez que esta chave será exibida e não pode ser recuperada novamente.",
+    "generatedKeyMessage": "Uma Chave de API foi gerada para o seu Inquilino",
+    "generatedKeyMessageInnkeeper": "Uma Chave de API foi gerada para o Inquilino {key}",
+    "search": "Buscar Chaves de API"
+  },
+  "common": {
+    "actions": "Ações",
+    "alias": "Alias",
+    "apiKey": "Chave de API",
+    "byName": "Buscar por Nome",
+    "configDelim": ": ",
+    "confirmation": "Confirmação",
+    "connectionName": "Nome da Conexão",
+    "contactName": "Nome de Contato",
+    "createdAt": "Criado Em",
+    "credentialId": "ID da Credencial",
+    "credentials": "Credenciais",
+    "decodedJwt": "JWT Decodificado",
+    "deleted": "Excluído",
+    "deletedAt": "Excluído Em",
+    "developer": "Desenvolvedor",
+    "emailAddress": "Endereço de E-mail",
+    "encodedJwt": "JWT Codificado",
+    "endorser": "Apoiador",
+    "errorGettingUrl": "Erro ao buscar {url}",
+    "genericError": "Ocorreu um erro",
+    "hideDeleted": "Ocultar Excluídos",
+    "invitationUrl": "URL do Convite",
+    "json": "JSON",
+    "loading": "Carregando dados. Por favor, aguarde...",
+    "logout": "Sair",
+    "name": "Nome",
+    "noRecordsFound": "Nenhum Registro Encontrado",
+    "profile": "Perfil",
+    "protocol": "Protocolo",
+    "refreshTable": "Atualizar Tabela",
+    "request": "Requisição",
+    "searchByCreated": "Buscar por Data de Criação",
+    "searchByDeleted": "Buscar por Data de Exclusão",
+    "searchByName": "Buscar por Nome",
+    "settings": "Configurações",
+    "showDeleted": "Mostrar Excluídos",
+    "status": "Status",
+    "submit": "Enviar",
+    "tenantId": "ID do Inquilino",
+    "tenantName": "Nome do Inquilino",
+    "tenantReason": "Motivo do Inquilino",
+    "toggleCardExpand": "Alternar Expansão do Cartão",
+    "walletId": "ID da Carteira"
+  },
+  "configuration": {
+    "configuration": "Configuração",
+    "credentialDefinitions": {
+      "alreadyExists": "A definição de credencial já existe no livro razão. Por favor, use uma tag diferente.",
+      "confirmDelete": "Tem certeza de que deseja remover esta definição de credencial do armazenamento?",
+      "copy": "Copiar Definição de Credencial",
+      "copyInfo1": "Isso copiará a definição de credencial",
+      "copyInfo2": "do esquema selecionado",
+      "copyInfo3": "dando a ela uma nova tag.",
+      "create": "Criar Definição de Credencial",
+      "delete": "Excluir Definição de Credencial",
+      "deleteSuccess": "Definição de credencial removida do armazenamento",
+      "newTag": "Nova Tag*",
+      "postFinished": "A definição de credencial agora está escrita no livro razão e pode ser usada para emitir credenciais.",
+      "postStart": "Definição de credencial postada no livro razão. Isso pode levar alguns segundos.",
+      "revokable": "Revogável",
+      "searchBySchemaId": "Buscar por ID de Esquema",
+      "selectSchema": "Selecionar um esquema",
+      "storage": "Armazenamento de Definição de Credencial",
+      "stored": "Definições de Credenciais Armazenadas",
+      "tagAlreadyUsed": "A tag já está em uso",
+      "tagRequired": "Tag é obrigatória",
+      "title": "Definição de Credencial(ões)"
+    },
+    "oca": {
+      "bundleAssociationType": "Tipo de Associação de Pacote OCA",
+      "bundleJson": "JSON do Pacote OCA",
+      "bundleUrl": "URL do Pacote OCA*",
+      "disclaimer": "A Visualização de Cartão OCA para Credenciais na UI do Inquilino é uma funcionalidade experimental.",
+      "oca": "OCA",
+      "storedBundleJson": "JSON do Pacote OCA Armazenado",
+      "url": "URL"
+    },
+    "schemas": {
+      "add": "Adicionar Esquema",
+      "addedFromLedger": "O esquema [{schemaId}] foi adicionado do livro razão.",
+      "addFromLedger": "Adicionar Esquema do Livro Razão",
+      "addFromLedgerInfo": "Isso adicionará qualquer esquema do livro razão conectado para uso neste inquilino de tração. Você deve inserir o ID completo do esquema.",
+      "addNotExists": "O esquema solicitado não existe no livro razão. Por favor, verifique o ID do esquema e tente novamente.",
+      "alreadyExists": "O esquema já existe no livro razão. Por favor, use um nome ou versão diferente.",
+      "confirmDelete": "Tem certeza de que deseja excluir este esquema?",
+      "copy": "Copiar Esquema",
+      "copyMessage": "Você pode alterar atributos, mas o novo esquema deve ter um nome ou versão diferente.",
+      "copySent": "O esquema copiado foi enviado para o livro razão. Isso pode levar alguns segundos.",
+      "create": "Criar Esquema",
+      "delete": "Excluir Esquema",
+      "deleteSuccess": "Esquema excluído com sucesso",
+      "emptyAttributes": "Forneça pelo menos um atributo para o esquema",
+      "id": "ID do Esquema",
+      "invalidCopy": "Não é possível copiar com o mesmo valor de {field} [{value}]",
+      "mustBeDecimal": "Deve ser um valor decimal de 2 ou 3 partes como x.y ou x.y.z",
+      "newName": "Novo Nome do Esquema",
+      "newVersion": "Nova Versão do Esquema",
+      "postFinished": "O esquema agora está escrito no livro razão e pode ser usado para definições de credenciais.",
+      "postStart": "Esquema postado no livro razão. Isso pode levar alguns segundos.",
+      "schema": "Esquema",
+      "storage": "Armazenamento de Esquema",
+      "stored": "Esquemas Armazenados"
+    },
+    "search": {
+      "actions": "Ações",
+      "attributes": "Atributos",
+      "byAttributes": "Buscar por Atributos",
+      "byDate": "Buscar por Data",
+      "byId": "Buscar por ID",
+      "byName": "Buscar por Nome",
+      "bySchemaId": "Buscar por ID de Esquema",
+      "byVersion": "Buscar por Versão",
+      "createdAt": "Criado Em",
+      "credDefs": "Buscar Definições de Credenciais",
+      "name": "Nome",
+      "schemas": "Buscar Esquemas",
+      "version": "Versão"
+    }
+  },
+  "connect": {
+    "acceptInvitation": {
+      "accept": "Aceitar Convite",
+      "invitation": "Convite",
+      "skipUrl": "Ignorar URL e usar JSON",
+      "submit": "Aceitar",
+      "supportedUrl": "O formato de URL suportado é",
+      "supportedUrlEx": "http://<acapy_url>?{0}=<base64 encode>",
+      "url": "URL do Convite"
+    },
+    "connections": {
+      "connections": "Conexões",
+      "delete": "Excluir Conexão",
+      "edit": "Editar Conexão",
+      "search": "Buscar Conexões"
+    },
+    "didExchange": {
+      "did": "DID",
+      "didExchange": "Troca de DID"
+    },
+    "edit": {
+      "lastUpdated": "Última Atualização da Conexão: {0}"
+    },
+    "invitation": {
+      "alias": "Alias da Conexão",
+      "close": "Fechar",
+      "create": "Criar Convite",
+      "goal": "Objetivo",
+      "goalCode": "Código do Objetivo",
+      "myLabel": "Minha Etiqueta",
+      "oobSettings": "Configurações OOB Opcionais",
+      "submit": "Enviar",
+      "type": "Tipo",
+      "typeConnections": "Conexões",
+      "typeMultiUse": "Convite Multi Uso",
+      "typeOob": "Out-of-Band",
+      "typeSingleMulti": "Único/Multi",
+      "typeSingleUse": "Convite de Uso Único"
+    },
+    "invitations": {
+      "create": "Criar Convite",
+      "invitations": "Convites",
+      "regenerate": "Regenerar Convite",
+      "search": "Buscar Convites"
+    },
+    "message": {
+      "messageConnection": "Conversar com {0}"
+    },
+    "table": {
+      "createdAt": "Criado Em",
+      "invitationMode": "Modo de Convite",
+      "theirLabel": "Etiqueta Deles"
+    }
+  },
+  "credentials": {
+    "exchanges": {
+      "exchanges": "Trocas de Credenciais",
+      "search": "Buscar Trocas de Credenciais",
+      "table": {
+        "connection": "Conexão",
+        "credential": "Credencial",
+        "lastUpdate": "Última Atualização"
+      },
+      "viewCard": "Visualizar no formato de Cartão",
+      "viewTable": "Visualizar no formato de Tabela"
+    },
+    "wallet": {
+      "noOca": "Não há OCA associado a esta definição de credencial",
+      "noOcaNotImpl": "Não é possível exibir a visualização de cartão para Credenciais sem OCA neste momento.",
+      "notFound": "Não há credenciais em sua Carteira"
+    }
+  },
+  "dashboard": {
+    "backToDashboard": "Voltar ao Painel",
+    "dashboard": "Painel",
+    "greeting": "Adaptado de Traction-BC - By: Matheus Lázaro"
+  },
+  "holder": {
+    "holder": "Detentor"
+  },
+  "home": {
+    "dashboard": "Painel",
+    "greeting": "Adaptado de Traction-BC - By: Matheus Lázaro",
+    "login": {
+      "id": "ID da Carteira",
+      "secret": "Chave da Carteira",
+      "submit": "Entrar"
+    }
+  },
+  "httpStatus": {
+    "404": {
+      "code": "404",
+      "status": "Página Não Encontrada"
+    }
+  },
+  "issue": {
+    "attributes": "Atributos*",
+    "connection": "Conexão: ",
+    "credentialDefinitionTag": "Tag da Definição de Credencial*",
+    "credentialFieldValues": "Valores do Campo de Credencial",
+    "credentials": "Credenciais Emitidas/Ofercidas",
+    "credentialValue": "Valor da Credencial",
+    "delete": {
+      "confirm": "Tem certeza de que deseja EXCLUIR este registro de troca de credencial?",
+      "removeExchange": "Remover Registro de Troca de Credencial",
+      "success": "Registro de troca de credencial excluído"
+    },
+    "id": "ID: ",
+    "issuance": "Emissão",
+    "offer": "Oferecer Credencial",
+    "revocationEnabled": "Revogação Habilitada",
+    "revocationId": "ID de Revogação: ",
+    "revocationRegistry": "Registro de Revogação: ",
+    "revocationRegistrySize": "Tamanho do Registro de Revogação",
+    "revoke": {
+      "action": "Revogar",
+      "comment": "Comentário Opcional",
+      "confirm": "Tem certeza de que deseja REVOCAR esta credencial?",
+      "revokeCred": "Revogar Credencial",
+      "success": "Credencial revogada"
+    },
+    "schema": "Esquema",
+    "schemaId": "ID do Esquema*",
+    "schemaName": "Nome*",
+    "schemaVersion": "Versão*",
+    "version": "Versão:"
+  },
+  "layout": {
+    "header": {
+      "toggleSideMenu": "Alternar o menu lateral"
+    }
+  },
+  "login": {
+    "backToSignIn": "Voltar para Login",
+    "checkStatus": "Verificar Status!",
+    "createRequest": "Criar Solicitação!",
+    "invalidCreds": "Credenciais de login incorretas. Por favor, tente novamente.",
+    "noAccount": "Não tem uma conta?",
+    "submit": "Entrar",
+    "submittedRequest": "Já enviou uma solicitação?",
+    "walletSecret": "Chave da Carteira"
+  },
+  "messages": {
+    "connectionId": "ID da Conexão",
+    "createMessage": "Criar uma Mensagem",
+    "disclaimer": "Nota: Esta tabela contém registros de armazenamento de mensagens. Para conversas por conexão, consulte a página 'Conexões'.",
+    "messageContent": "Conteúdo da Mensagem",
+    "messages": "Mensagens"
+  },
+  "profile": {
+    "config": "Configuração:",
+    "connectionNotActiveYet": "Conexão ainda não está ativa, atualize ou volte quando o endossante aceitar a solicitação.",
+    "connectTenantToEndorser": "Conectar Inquilino ao Endossante",
+    "connectTenantToEndorserNotAllowed": "O locador não aprovou conexões de endossante.",
+    "connectToEndorserAndRegisterDID": "Conectar ao Endossante e Registrar DID correspondente a um Livro Razão",
+    "contact": "E-mail de Contato",
+    "createdAt": "Criado em",
+    "endorserConnection": "Conexão do Endossante",
+    "endorserInfo": "Informações do Endossante",
+    "imageUrl": "URL da Imagem",
+    "issuer": "Emissor",
+    "name": "Nome",
+    "noEndorserInfoFound": "Nenhuma informação de endossante encontrada, emissão desativada",
+    "publicDid": "DID Público",
+    "registerPublicDid": "Registrar um DID público",
+    "registerPublicDidNotAllowed": "O locador não aprovou o registro público de DID.",
+    "state": "Estado: {0}",
+    "taa": {
+      "accepted": "Aceito em",
+      "agreeAccept": "Eu concordo com os termos do Acordo de Autorização de Transação",
+      "mechanism": "Mecanismo",
+      "ratification": "Ratificação:",
+      "requiredNo": "Nenhum Acordo de Autorização de Transação é necessário para este livro razão.",
+      "requiredYes": "Um Acordo de Autorização de Transação é necessário para este livro razão.",
+      "reviewButton": "Revisar/Aceitar TAA",
+      "taaAcceptance": "Aceitação do TAA",
+      "taaDetails": "Detalhes do TAA",
+      "version": "Versão do TAA:"
+    },
+    "tenantId": "ID do Inquilino",
+    "tenantNotConnectedToEndorserYet": "Inquilino ainda não está conectado ao endossante",
+    "token": "Token JWT",
+    "updatedAt": "Atualizado em",
+    "walletLabel": "Rótulo da Carteira",
+    "webHookKey": "Chave do WebHook",
+    "webhooks": "Webhooks",
+    "webHookUrl": "URL do WebHook",
+    "writeLedger": "Livro Razão Atual: {0}"
+  },
+  "qrCode": {
+    "noContentFound": "Nenhum conteúdo encontrado"
+  },
+  "reservations": {
+    "alreadyComplete": "Já Completo",
+    "approved!": "APROVADO!",
+    "approved": {
+      "text": "A senha de check-in foi gerada. Um e-mail foi enviado para {email}",
+      "title": "Reserva Aprovada",
+      "toast": "Reserva Aprovada para {email}"
+    },
+    "approveRequest": "Aprovar Solicitação",
+    "checkJunkFolder": "(Por favor, verifique sua pasta de spam antes de entrar em contato conosco, pois é muito comum ter problemas de entrega de e-mail devido a filtros automáticos.)",
+    "contactEmail": "E-mail de Contato",
+    "contactPhone": "Telefone de Contato",
+    "current": "Atual",
+    "dateOccurred": "A data em que isso ocorreu foi {0}",
+    "declined!": "RECUSADO!",
+    "denied": {
+      "reasonText": "Motivo da Recusa (Opcional)",
+      "toast": "Reserva Recusada para {email}"
+    },
+    "denyRequest": "Recusar Solicitação",
+    "emailSentTo": "Um e-mail também foi enviado para {0} com o número da reserva abaixo.",
+    "enterPassword": "Digite a senha da reserva abaixo para validar sua conta.",
+    "history": "Histórico",
+    "incorrectEmailOrReservationId": "E-mail ou ID da reserva incorretos. Por favor, tente novamente.",
+    "loadingCheckIn": "Fazendo check-in na reserva",
+    "otp": "A senha é mostrada abaixo uma vez, se precisar comunicá-la por outros meios",
+    "passwordAvailable": "A senha da reserva está visível abaixo, por favor, use-a para completar seu check-in.",
+    "passwordValid48Hours": "A senha da reserva é válida apenas por 48 horas a partir do momento em que foi enviada para o seu endereço de e-mail.",
+    "pending!": "PENDENTE!",
+    "refreshed": {
+      "text": "A senha de check-in foi reenviada para {email}",
+      "title": "Senha Atualizada",
+      "toast": "Senha Atualizada para {email}"
+    },
+    "refreshPassword": "Atualizar Senha",
+    "requestDeclined": "Lamentamos informar que sua solicitação foi recusada.",
+    "requestProcessingTime": "Geralmente, leva de 3 a 4 dias úteis para processar uma solicitação. Obrigado pela sua paciência.",
+    "requestReservedOn": "Sua solicitação foi recebida em {0}",
+    "requests": "Solicitações",
+    "reservationHistory": "Histórico de Reservas",
+    "reservationId": "ID da Reserva",
+    "reservationPassword": "Senha da Reserva",
+    "reservationPreviouslyCompleted": "Esta reserva já foi concluída anteriormente e os detalhes da carteira foram fornecidos.",
+    "reservations": "Reservas",
+    "reservationValidated": "Sua reserva foi validada com sucesso.",
+    "resonForRejection": "Motivo da rejeição",
+    "saveWalletIdAndWalletKey": "Por favor, salve seu novo ID e chave da carteira gerados em um local seguro. Você perderá os dados assim que esta janela for fechada ou se voltar para o login. Nunca compartilharemos essas informações por e-mail nem as reemitiremos mediante solicitação.",
+    "sentPasswordOn": "Enviamos uma senha de reserva para o seu endereço de e-mail em {0}",
+    "submitNewRequest": "Se você acha que houve um erro, pode enviar uma nova solicitação novamente.",
+    "submitted": "Sua solicitação foi enviada com sucesso. ",
+    "thankYou!": "Obrigado!",
+    "validated!": "VALIDADO!",
+    "walletIdAndWalletKey": "Aqui está o seu novo ID de Carteira e Chave de Carteira associados ao endereço de e-mail mencionado durante o registro.",
+    "walletKey": "Chave da Carteira",
+    "walletKeyCannotBeRetrievedAgain": "A chave da carteira não pode ser recuperada novamente depois de fornecida. Se você precisar de uma nova carteira, pode voltar e começar uma nova reserva."
+  },
+  "reserve": {
+    "fullName": "Nome Completo",
+    "phone": "Telefone / Celular"
+  },
+  "serverConfig": {
+    "acapyVersion": "Versão do ACA-Py",
+    "expand": "Mostrar configuração completa do servidor ACA-Py",
+    "ledger": {
+      "default": "Livro Razão Base Padrão",
+      "ledgerDetails": "Detalhes do Livro Razão",
+      "ledgerList": "Lista de Livros Razão",
+      "quickConnect": "Conectar rapidamente ao endossante do UI do Inquilino"
+    },
+    "serverConfig": "Configuração do Servidor",
+    "storage": {
+      "multitenantWalletName": "Nome da Carteira Multilocatária",
+      "multitenantWalletType": "Tipo de Carteira Multilocatária",
+      "title": "Armazenamento",
+      "walletStorageConfig": "Configuração de Armazenamento da Carteira",
+      "walletStorageType": "Tipo de Armazenamento da Carteira",
+      "walletType": "Tipo de Carteira"
+    },
+    "tenants": {
+      "reservation": "Reserva",
+      "reservationAutoApprove": "Aprovar automaticamente reservas",
+      "reservationAutoIssuer": "Aprovação automática de emissão",
+      "reservationExpiry": "Expiração da reserva (minutos)",
+      "reservationForm": "Formulário de Reserva",
+      "reservationOidc": "Login OIDC necessário para reserva",
+      "title": "Locatários/Reservas",
+      "token": "Expiração do Token"
+    },
+    "tenantUi": {
+      "expand": "Mostrar Configuração Completa do Frontend do UI do Inquilino",
+      "oidc": "Endpoint OIDC",
+      "sessionExpiry": "Expiração da sessão frontend",
+      "sessionExpiryVal": "{0} segundos (Contagem regressiva: {1} segundos)",
+      "showWrite": "Mostrar Componentes 'Escrever'",
+      "tenantUi": "UI do Inquilino"
+    },
+    "tractionProxy": "URL do Traction Proxy"
+  },
+  "session": {
+    "countdown": "Você será desconectado em { seconds } segundos...",
+    "countdownHeader": "Tempo limite da sessão",
+    "timeoutHeader": " ",
+    "timeoutMessage": "Sua sessão expirou devido à inatividade e você foi desconectado. Por favor, insira novamente suas informações de login."
+  },
+  "status": {
+    "email": "Digite seu endereço de e-mail da solicitação",
+    "reservationId": "Digite seu ID da reserva",
+    "submit": "Verificar Status"
+  },
+  "tenant": {
+    "profile": {
+      "tenantProfile": "Perfil do Inquilino"
+    },
+    "settings": {
+      "acapyAutoAcceptInvites": "Aceitar convites automaticamente",
+      "acapyAutoAcceptRequests": "Aceitar solicitações automaticamente",
+      "acapyAutoPingConnection": "Ping de conexão automático",
+      "acapyAutoRequestEndorsement": "Solicitar endosso automaticamente",
+      "acapyAutoRespondCredentialOffer": "Responder automaticamente a ofertas de credenciais",
+      "acapyAutoRespondCredentialRequest": "Responder automaticamente a solicitações de credenciais",
+      "acapyAutoRespondMessages": "Responder automaticamente a mensagens",
+      "acapyAutoVerifyPresentation": "Verificar automaticamente apresentações",
+      "acapyAutoWriteTransactions": "Escrever transações endossadas automaticamente",
+      "acapyCreateRevocationTransactions": "Criar transações de revogação",
+      "acapyEndorserRole": "Função de Endossante",
+      "acapyHelpAutoAcceptInvites": "ACAPY_AUTO_ACCEPT_INVITES - Aceitar automaticamente convites sem disparar um evento de webhook ou esperar por uma solicitação de administrador.",
+      "acapyHelpAutoAcceptRequests": "ACAPY_AUTO_ACCEPT_REQUESTS - Aceitar automaticamente solicitações de conexão sem disparar um evento de webhook ou esperar por uma solicitação de administrador.",
+      "acapyHelpAutoPingConnection": "ACAPY_AUTO_PING_CONNECTION - Enviar automaticamente um ping de confiança imediatamente após a aceitação de uma resposta de conexão. Alguns agentes exigem isso antes de marcar uma conexão como 'ativa'",
+      "acapyHelpAutoRequestEndorsement": "ACAPY_AUTO_REQUEST_ENDORSEMENT - Para autores, especifique se deseja solicitar automaticamente o endosso para todas as transações. (Se não especificado, o controlador deve invocar a operação de solicitação de endosso para cada transação.)",
+      "acapyHelpAutoRespondCredentialOffer": "ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER - Responder automaticamente a ofertas de credenciais Indy com uma solicitação de credencial",
+      "acapyHelpAutoRespondCredentialRequest": "ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST - Responder automaticamente a solicitações de credenciais com credenciais correspondentes",
+      "acapyHelpAutoRespondMessages": "ACAPY_AUTO_RESPOND_MESSAGES - Responder automaticamente a mensagens básicas indicando que a mensagem foi recebida",
+      "acapyHelpAutoVerifyPresentation": "ACAPY_AUTO_VERIFY_PRESENTATION - Verificar automaticamente uma apresentação quando recebida.",
+      "acapyHelpAutoWriteTransactions": "ACAPY_AUTO_WRITE_TRANSACTIONS - Para autores, especifique se deseja escrever automaticamente transações endossadas. (Se não especificado, o controlador deve invocar a operação de escrever transação para cada transação.)",
+      "acapyHelpCreateRevocationTransactions": "ACAPY_CREATE_REVOCATION_TRANSACTIONS - Para autores, especifique se deseja criar automaticamente transações para o registro de revogação de uma definição de credencial. (Se não especificado, o controlador deve invocar os pontos finais necessários para criar o registro de revogação e atribuir à definição de credencial.)",
+      "acapyHelpEndorserRole": "ACAPY_ENDORSER_ROLE - Especifique a função ('autor' ou 'endossante') que este agente desempenhará. Autores solicitarão o endosso de transações de um Endossante. Endossantes endossarão transações de Autores e podem escrever suas próprias transações no livro razão. Se nenhuma função (ou 'nenhuma') for especificada, o protocolo de endosso não será usado e este agente escreverá transações diretamente no livro razão.",
+      "acapyHelpInvitePublic": "ACAPY_INVITE_PUBLIC - Sinaliza que o convite gerado deve ser público.",
+      "acapyHelpLogLevel": "ACAPY_LOG_LEVEL - Especifica um nível de log personalizado.",
+      "acapyHelpMonitorPing": "ACAPY_MONITOR_PING - Envia um webhook quando um ping é enviado ou recebido.",
+      "acapyHelpNotifyRevocation": "ACAPY_NOTIFY_REVOCATION - Especifica que o aca-py notificará os destinatários de credenciais ao revogar uma credencial emitida por ele.",
+      "acapyHelpPublicInvites": "ACAPY_PUBLIC_INVITES - Enviar convites usando o DID público do agente e receber solicitações de conexão solicitadas por convites que usam o DID público. Padrão",
+      "acapyInvitePublic": "Convite gerado deve ser público",
+      "acapyLogLevel": "Nível de Log",
+      "acapyMonitorPing": "Monitorar Ping",
+      "acapyNotifyRevocation": "Notificar de Revogação",
+      "acapyPublicInvites": "Enviar Convites usando DID público",
+      "auto": "Sinais Automáticos",
+      "extraSettings": "Configurações Extras do ACA-Py",
+      "tenantWalletSettings": "Configurações da Carteira do Inquilino"
+    }
+  },
+  "tenants": {
+    "checkIn": "Check-In do Inquilino",
+    "search": "Pesquisar Inquilinos",
+    "settings": {
+      "canBecomeIssuer": "O inquilino pode se tornar emissor, ou seja, conectar-se ao endossante e registrar um DID",
+      "canConnectEndorser": "Inquilino permitido a se conectar ao Endossante",
+      "canRegisterDid": "Inquilino permitido a registrar um DID público",
+      "confirmDeletion": "Para confirmar, digite \"{tenantName}\" na caixa abaixo",
+      "confirmDeletionIncorrect": "Nome do inquilino incorreto. Por favor, confirme o nome correto antes da exclusão.",
+      "confirmDeletionSuccess": "Inquilino {0} marcado com sucesso como excluído",
+      "deleteTenant": "Excluir Inquilino",
+      "editSettings": "Editar Configuração do Inquilino",
+      "enableLedgerSwitch": "Inquilino pode alternar endossante/livro razão",
+      "endorserAlias": "Alias do Endossante:",
+      "ledgerName": "Nome do Livro Razão:",
+      "restoreConfirm": "Restaurar inquilino {0}",
+      "restoreSuccess": "Inquilino {0} restaurado com sucesso",
+      "restoreTenant": "Restaurar Inquilino",
+      "success": "Configuração do Inquilino Atualizada"
+    },
+    "tenants": "Inquilinos"
+  },
+  "verifier": {
+    "attributeRestrictionsSatisfied": "Todas as restrições de atributos foram atendidas",
+    "comingSoon": "Em Breve",
+    "contactAlias: ": "Alias de Conexão: ",
+    "credentialHeldBy": "Credencial é mantida por",
+    "credentialTamperFree ": "Credencial é à prova de violação ",
+    "credentialValid": "Credencial é válida",
+    "presentationShouldHaveStatus": "Este não é o componente que você está procurando, a apresentação deve ter status='verificado'",
+    "status: ": "Status",
+    "updatedAt": "Atualizado em",
+    "verifications": "Verificações"
+  },
+  "verify": {
+    "autoVerify": "Auto Verificar",
+    "autoVerifyHelp": "Escolha do verificador para autoverificar a apresentação da prova",
+    "comment": "Comentário Opcional",
+    "connection": "Conexão",
+    "copyRequest": "Copiar Solicitação de Apresentação Existente",
+    "createRequest": "Criar Solicitação de Apresentação",
+    "delete": "Excluir Registro de Troca de Apresentação",
+    "deleteConfirmation": "Tem certeza de que deseja excluir este Registro de Troca de Apresentação?",
+    "deleteSuccess": "Registro de Troca de Apresentação excluído com sucesso",
+    "presentationRequestBody": "Solicitação de Prova",
+    "verification": "Verificação",
+    "verifications": "Verificações"
+  }
+}

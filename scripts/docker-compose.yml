@@ -1,0 +1,380 @@
+version: "3.9"
+services:
+  ngrok-traction-agent:
+    image: ngrok/ngrok
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+      - TRACTION_ACAPY_HTTP_PORT=${TRACTION_ACAPY_HTTP_PORT}
+    ports:
+      - 4052:4040
+    command: http traction-agent:${TRACTION_ACAPY_HTTP_PORT} --log stdout
+
+  traction-acapy-image-builder:
+    pull_policy: missing
+    build:
+      context: ../plugins
+      dockerfile: ./docker/Dockerfile
+    image: traction:plugins-acapy
+    entrypoint: "/bin/bash"
+    tty: true
+
+  traction-agent:
+    pull_policy: missing
+    build:
+      context: ../services/aca-py
+      dockerfile: Dockerfile.acapy
+    image: traction:traction-agent
+    depends_on:
+      traction-acapy-image-builder:
+        condition: service_started
+      traction-db:
+        condition: service_healthy
+    environment:
+      - TRACTION_ENV=${TRACTION_ENV}
+      - NGROK_NAME=ngrok-traction-agent
+      - TRACTION_ACAPY_HTTP_PORT=${TRACTION_ACAPY_HTTP_PORT}
+      - TRACTION_ACAPY_ADMIN_PORT=${TRACTION_ACAPY_ADMIN_PORT}
+      - TRACTION_ACAPY_WALLET_NAME=${TRACTION_ACAPY_WALLET_NAME}
+      - TRACTION_ACAPY_WALLET_ENCRYPTION_KEY=${TRACTION_ACAPY_WALLET_ENCRYPTION_KEY}
+      - TRACTION_ACAPY_WALLET_SCHEME=${TRACTION_ACAPY_WALLET_SCHEME}
+      - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+      - POSTGRESQL_USER=${POSTGRESQL_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - TRACTION_MULTITENANCY_CONFIGURATION_WALLET_TYPE=${TRACTION_MULTITENANCY_CONFIGURATION_WALLET_TYPE}
+      - TRACTION_MULTITENANCY_CONFIGURATION_WALLET_NAME=${TRACTION_MULTITENANCY_CONFIGURATION_WALLET_NAME}
+      - ACAPY_LOG_LEVEL=${ACAPY_LOG_LEVEL}
+      - ACAPY_AUTO_PROVISION=${ACAPY_AUTO_PROVISION}
+      - ACAPY_WALLET_TYPE=${ACAPY_WALLET_TYPE}
+      - ACAPY_WALLET_STORAGE_TYPE=${ACAPY_WALLET_STORAGE_TYPE}
+      - ACAPY_GENESIS_TRANSACTIONS_LIST=${ACAPY_GENESIS_TRANSACTIONS_LIST}
+      - ACAPY_READ_ONLY_LEDGER=${ACAPY_READ_ONLY_LEDGER}
+      - ACAPY_LABEL=${ACAPY_LABEL}
+      - ACAPY_ADMIN_API_KEY=${ACAPY_ADMIN_API_KEY}
+      - ACAPY_ADMIN_INSECURE_MODE=${ACAPY_ADMIN_INSECURE_MODE}
+      - ACAPY_AUTO_ACCEPT_INVITES=${ACAPY_AUTO_ACCEPT_INVITES}
+      - ACAPY_AUTO_ACCEPT_REQUESTS=${ACAPY_AUTO_ACCEPT_REQUESTS}
+      - ACAPY_AUTO_RESPOND_MESSAGES=${ACAPY_AUTO_RESPOND_MESSAGES}
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_PROPOSAL=${ACAPY_AUTO_RESPOND_CREDENTIAL_PROPOSAL}
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER=${ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER}
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=${ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST}
+      - ACAPY_AUTO_RESPOND_PRESENTATION_PROPOSAL=${ACAPY_AUTO_RESPOND_PRESENTATION_PROPOSAL}
+      - ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST=${ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST}
+      - ACAPY_AUTO_VERIFY_PRESENTATION=${ACAPY_AUTO_VERIFY_PRESENTATION}
+      - ACAPY_AUTO_PING_CONNECTION=${ACAPY_AUTO_PING_CONNECTION}
+      - ACAPY_MONITOR_PING=${ACAPY_MONITOR_PING}
+      - ACAPY_PUBLIC_INVITES=${ACAPY_PUBLIC_INVITES}
+      - ACAPY_MULTITENANT=${ACAPY_MULTITENANT}
+      - ACAPY_MULTITENANT_ADMIN=${ACAPY_MULTITENANT_ADMIN}
+      - ACAPY_MULTITENANT_JWT_SECRET=${ACAPY_MULTITENANT_JWT_SECRET}
+      - ACAPY_MULTITENANCY_CONFIGURATION=${ACAPY_MULTITENANCY_CONFIGURATION}
+      - ACAPY_EMIT_NEW_DIDCOMM_PREFIX=${ACAPY_EMIT_NEW_DIDCOMM_PREFIX}
+      - ACAPY_EMIT_NEW_DIDCOMM_MIME_TYPE=${ACAPY_EMIT_NEW_DIDCOMM_MIME_TYPE}
+      - ACAPY_TAILS_SERVER_BASE_URL=${ACAPY_TAILS_SERVER_BASE_URL}
+      - ACAPY_TAILS_SERVER_UPLOAD_URL=${ACAPY_TAILS_SERVER_UPLOAD_URL}
+      - ACAPY_PRESERVE_EXCHANGE_RECORDS=${ACAPY_PRESERVE_EXCHANGE_RECORDS}
+      - ACAPY_AUTO_STORE_CREDENTIAL=${ACAPY_AUTO_STORE_CREDENTIAL}
+      - ACAPY_NOTIFY_REVOCATION=${ACAPY_NOTIFY_REVOCATION}
+      - ACAPY_MONITOR_REVOCATION_NOTIFICATION=${ACAPY_MONITOR_REVOCATION_NOTIFICATION}
+      - ACAPY_ENDORSER_ROLE=${ACAPY_ENDORSER_ROLE}
+      - ACAPY_AUTO_REQUEST_ENDORSEMENT=${ACAPY_AUTO_REQUEST_ENDORSEMENT}
+      - ACAPY_AUTO_WRITE_TRANSACTIONS=${ACAPY_AUTO_WRITE_TRANSACTIONS}
+      - ACAPY_AUTO_PROMOTE_AUTHOR_DID=${ACAPY_AUTO_PROMOTE_AUTHOR_DID}
+      - ACAPY_CREATE_REVOCATION_TRANSACTIONS=${ACAPY_CREATE_REVOCATION_TRANSACTIONS}
+      - ACAPY_PLUGIN_CONFIG=${ACAPY_PLUGIN_CONFIG}
+      - RUST_LOG=error
+    ports:
+      - ${TRACTION_ACAPY_ADMIN_PORT}:${TRACTION_ACAPY_ADMIN_PORT}
+      - ${TRACTION_ACAPY_HTTP_PORT}:${TRACTION_ACAPY_HTTP_PORT}
+    entrypoint: /bin/bash
+    command: ["-c", "sleep 5; ./ngrok-wait.sh"]
+    volumes:
+      - "./plugin-config.yml:/home/aries/plugin-config.yml"
+      - "./ledgers.yml:/home/aries/ledgers.yml"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  traction-db:
+    image: "postgres:14.5"
+    environment:
+      - POSTGRES_USER=${POSTGRESQL_USER}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_DB=${POSTGRESQL_DB}
+    ports:
+      - ${POSTGRESQL_PORT}:5432
+    volumes:
+      - traction-wallet:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  tenant-ui:
+    pull_policy: missing
+    build:
+      context: ../services/tenant-ui
+      dockerfile: Dockerfile
+    image: traction:tenant-ui
+    depends_on:
+      tenant-proxy:
+        condition: service_started
+    environment:
+      - SERVER_TRACTION_URL=${SERVER_TRACTION_URL}
+      - FRONTEND_TENANT_PROXY_URL=${FRONTEND_TENANT_PROXY_URL}
+      - IMAGE_BUILDTIME=${IMAGE_BUILDTIME}
+      - IMAGE_TAG=${IMAGE_TAG}
+      - IMAGE_VERSION=${IMAGE_VERSION}
+      - UX_APP_TITLE=${UX_APP_TITLE}
+      - UX_APP_INNKEEPER_TITLE=${UX_APP_INNKEEPER_TITLE}
+      - UX_SIDEBAR_TITLE=${UX_SIDEBAR_TITLE}
+      - UX_COPYRIGHT=${UX_COPYRIGHT}
+      - UX_OWNER=${UX_OWNER}
+      - FRONTEND_ARIES_LEDGER_DESCRIPTION=${FRONTEND_ARIES_LEDGER_DESCRIPTION}
+      - FRONTEND_ACAPY_VERSION_DISPLAY=${FRONTEND_ACAPY_VERSION_DISPLAY}
+      - FRONTEND_QUICK_CONNECT_ENDORSER_NAME=${FRONTEND_QUICK_CONNECT_ENDORSER_NAME}
+      - SERVER_SMTP_SERVER=maildev
+      - SERVER_SMTP_PORT=1025
+    ports:
+      - ${TENANT_UI_PORT}:8080
+    ###############################################
+    # Comment the following out if you want to use the default reservation form
+    volumes:
+      - ../services/tenant-ui/config/forms:/usr/src/app/frontend/dist/forms
+    ###############################################
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  tenant-proxy:
+    pull_policy: missing
+    build:
+      context: ../plugins
+      dockerfile: ./docker/Dockerfile.tenant-proxy
+    image: traction:tenant-proxy
+    depends_on:
+      traction-agent:
+        condition: service_started
+    restart: unless-stopped
+    environment:
+      - ACAPY_ADMIN_URL=${TRACTION_ACAPY_ADMIN_URL}
+      - ACAPY_ADMIN_URL_API_KEY=${ACAPY_ADMIN_API_KEY}
+    ports:
+      - ${TENANT_PROXY_PORT}:8080
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  ###############################################
+  # XXX: The following is breaking the build
+  ###############################################
+  # tenant-lob:
+  #   build:
+  #     context: ../services/tenant-lob
+  #     dockerfile: Dockerfile
+  #   image: traction:tenant-lob
+  #   depends_on:
+  #     tenant-proxy:
+  #       condition: service_started
+  #   restart: unless-stopped
+  #   environment:
+  #     - SERVER_TRACTION_URL=${LOB_SERVER_TRACTION_URL}
+  #     - TRACTION_INNKEEPER_TENANT_ID=${TRACTION_INNKEEPER_TENANT_ID}
+  #     - TRACTION_INNKEEPER_WALLET_NAME=${TRACTION_INNKEEPER_WALLET_NAME}
+  #     - TRACTION_INNKEEPER_WALLET_KEY=${TRACTION_INNKEEPER_WALLET_KEY}
+  #     - WEBHOOK_URL=${LOB_WEBHOOK_URL}
+  #   ports:
+  #     - ${LOB_PORT}:8088
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  ###############################################
+
+  endorser-api:
+    pull_policy: missing
+    build:
+      context: ../services/endorser
+      dockerfile: Dockerfile
+    image: traction:endorser-api
+    depends_on:
+      endorser-agent:
+        condition: service_started
+      endorser-db:
+        condition: service_healthy
+    environment:
+      - POSTGRESQL_HOST=${ENDORSER_POSTGRESQL_HOST}
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+      - POSTGRESQL_DB=${ENDORSER_PSQL_DB}
+      - ENDORSER_API_ADMIN_USER=${ENDORSER_API_ADMIN_USER}
+      - ENDORSER_API_ADMIN_KEY=${ENDORSER_API_ADMIN_KEY}
+      - ACAPY_ADMIN_URL=${ENDORSER_ACAPY_ADMIN_URL}
+      - ACAPY_ADMIN_URL_API_KEY=${ENDORSER_ACAPY_ADMIN_URL_API_KEY}
+      - ENVIRONMENT=production
+      - TRACTION_WEBHOOK_URL=${ENDORSER_WEBHOOK_URL}
+      - ACAPY_WEBHOOK_URL_API_KEY=${ENDORSER_ACAPY_WEBHOOK_URL_API_KEY}
+      - ENDORSER_API_PORT=${ENDORSER_API_PORT}
+    ports:
+      - ${ENDORSER_SERVICE_PORT}:${ENDORSER_API_PORT}
+    volumes:
+      - ../services/endorser:/app:rw
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  endorser-agent:
+    image: ghcr.io/hyperledger/aries-cloudagent-python:py3.9-0.11.0
+    depends_on:
+      endorser-db:
+        condition: service_healthy
+    ports:
+      - ${ACAPY_ENDORSER_ADMIN_PORT}:${ACAPY_ENDORSER_ADMIN_PORT}
+      - ${ACAPY_ENDORSER_HTTP_PORT}:${ACAPY_ENDORSER_HTTP_PORT}
+    entrypoint: /bin/bash
+    command: [
+        "-c",
+        "sleep 5;
+        aca-py start \
+        --auto-provision
+        --arg-file endorser-acapy-args.yml \
+        --inbound-transport http '0.0.0.0' ${ACAPY_ENDORSER_HTTP_PORT} \
+        --webhook-url '${ENDORSER_WEBHOOK_URL}' \
+        --genesis-url '${ACAPY_GENESIS_URL}' \
+        --endpoint ${ACAPY_ENDORSER_ENDPOINT} \
+        --wallet-name '${ENDORSER_ACAPY_WALLET_DATABASE}' \
+        --wallet-key '${ENDORSER_ACAPY_WALLET_ENCRYPTION_KEY}' \
+        --wallet-type '${ENDORSER_ACAPY_WALLET_TYPE}' \
+        --wallet-storage-type '${ENDORSER_ACAPY_WALLET_STORAGE_TYPE}' \
+        --wallet-storage-config '{\"url\":\"${ENDORSER_POSTGRESQL_HOST}:5432\",\"max_connections\":5}' \
+        --wallet-storage-creds '{\"account\":\"${POSTGRESQL_USER}\",\"password\":\"${POSTGRESQL_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_USER}\",\"admin_password\":\"${POSTGRESQL_PASSWORD}\"}' \
+        --wallet-name endorser-wallet  \
+        --seed '${ACAPY_ENDORSER_SEED}' \
+        --admin '0.0.0.0' ${ACAPY_ENDORSER_ADMIN_PORT} \
+        --label '${ENDORSER_AGENT_NAME}' \
+        ${ENDORSER_ACAPY_ADMIN_CONFIG} \
+        ${ENDORSER_ACAPY_READ_ONLY_MODE} \
+        --endorser-protocol-role endorser \
+        --auto-endorse-transactions \
+        ",
+      ]
+    environment:
+      - RUST_LOG=error
+    volumes:
+      - "./endorser-acapy-args.yml:/home/aries/endorser-acapy-args.yml"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  endorser-db:
+    image: "postgres:14.5"
+    environment:
+      - POSTGRES_USER=${POSTGRESQL_USER}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_DB=${POSTGRESQL_DB}
+    ports:
+      - ${ENDORSER_POSTGRESQL_PORT}:5432
+    volumes:
+      - endorser-wallet:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  endorser-api-1:
+    pull_policy: missing
+    build:
+      context: ../services/endorser
+      dockerfile: Dockerfile
+    image: traction:endorser-api
+    depends_on:
+      endorser-agent-1:
+        condition: service_started
+      endorser-db-1:
+        condition: service_healthy
+    environment:
+      - POSTGRESQL_HOST=${ENDORSER_1_POSTGRESQL_HOST}
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+      - POSTGRESQL_DB=${ENDORSER_PSQL_DB}
+      - ENDORSER_API_ADMIN_USER=${ENDORSER_API_ADMIN_USER}
+      - ENDORSER_API_ADMIN_KEY=${ENDORSER_API_ADMIN_KEY}
+      - ACAPY_ADMIN_URL=${ENDORSER_1_ACAPY_ADMIN_URL}
+      - ACAPY_ADMIN_URL_API_KEY=${ENDORSER_ACAPY_ADMIN_URL_API_KEY}
+      - ENVIRONMENT=production
+      - TRACTION_WEBHOOK_URL=${ENDORSER_1_WEBHOOK_URL}
+      - ACAPY_WEBHOOK_URL_API_KEY=${ENDORSER_ACAPY_WEBHOOK_URL_API_KEY}
+      - ENDORSER_API_PORT=${ENDORSER_API_1_PORT}
+    ports:
+      - ${ENDORSER_1_SERVICE_PORT}:${ENDORSER_API_1_PORT}
+    volumes:
+      - ../services/endorser:/app:rw
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  endorser-agent-1:
+    image: ghcr.io/hyperledger/aries-cloudagent-python:py3.9-0.11.0
+    depends_on:
+      endorser-db-1:
+        condition: service_healthy
+    ports:
+      - ${ACAPY_ENDORSER_1_ADMIN_PORT}:${ACAPY_ENDORSER_1_ADMIN_PORT}
+      - ${ACAPY_ENDORSER_1_HTTP_PORT}:${ACAPY_ENDORSER_1_HTTP_PORT}
+    entrypoint: /bin/bash
+    command: [
+        "-c",
+        "sleep 5;
+        aca-py start \
+        --auto-provision
+        --arg-file endorser-acapy-args.yml \
+        --inbound-transport http '0.0.0.0' ${ACAPY_ENDORSER_1_HTTP_PORT} \
+        --webhook-url '${ENDORSER_1_WEBHOOK_URL}' \
+        --genesis-url '${ACAPY_GENESIS_URL_1}' \
+        --endpoint ${ACAPY_ENDORSER_1_ENDPOINT} \
+        --wallet-name '${ENDORSER_1_ACAPY_WALLET_DATABASE}' \
+        --wallet-key '${ENDORSER_ACAPY_WALLET_ENCRYPTION_KEY}' \
+        --wallet-type '${ENDORSER_ACAPY_WALLET_TYPE}' \
+        --wallet-storage-type '${ENDORSER_ACAPY_WALLET_STORAGE_TYPE}' \
+        --wallet-storage-config '{\"url\":\"${ENDORSER_1_POSTGRESQL_HOST}:5432\",\"max_connections\":5}' \
+        --wallet-storage-creds '{\"account\":\"${POSTGRESQL_USER}\",\"password\":\"${POSTGRESQL_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_USER}\",\"admin_password\":\"${POSTGRESQL_PASSWORD}\"}' \
+        --wallet-name endorser-wallet-1  \
+        --seed '${ACAPY_ENDORSER_SEED_1}' \
+        --admin '0.0.0.0' ${ACAPY_ENDORSER_1_ADMIN_PORT} \
+        --label '${ENDORSER_AGENT_NAME}' \
+        ${ENDORSER_ACAPY_ADMIN_CONFIG} \
+        ${ENDORSER_ACAPY_READ_ONLY_MODE} \
+        --endorser-protocol-role endorser \
+        --auto-endorse-transactions \
+        ",
+      ]
+    environment:
+      - RUST_LOG=error
+    volumes:
+      - "./endorser-acapy-args.yml:/home/aries/endorser-acapy-args.yml"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  endorser-db-1:
+    image: "postgres:14.5"
+    environment:
+      - POSTGRES_USER=${POSTGRESQL_USER}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_DB=${POSTGRESQL_DB}
+    ports:
+      - ${ENDORSER_1_POSTGRESQL_PORT}:5432
+    volumes:
+      - endorser-wallet-1:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+volumes:
+  traction-wallet:
+  endorser-wallet:
+  endorser-wallet-1:

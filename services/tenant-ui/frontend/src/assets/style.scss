@@ -1,0 +1,35 @@
+@import 'primevue/resources/themes/lara-light-blue/theme.css'; // includes '~primevue/resources/themes/nova/theme.css'
+@import 'layout.scss';
+@import 'tenantuiComponents.scss';
+@import 'primevueOverrides/primevueOverrides.scss';
+@import 'toast.scss';
+
+// General HTML
+html,
+body,
+#app {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+a {
+  color: $tenant-ui-link-color;
+}

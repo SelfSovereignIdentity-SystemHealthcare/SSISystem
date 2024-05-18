@@ -1,0 +1,68 @@
+{
+  "frontend": {
+    "tenantProxyPath": "FRONTEND_TENANT_PROXY_URL",
+    "showInnkeeperReservationPassword": "FRONTEND_INNKEEPER_SHOW_RESERVATION_PASSWORD",
+    "showInnkeeperAdminLogin": "FRONTEND_INNKEEPER_SHOW_ADMIN",
+    "showWritableComponents": "FRONTEND_TENANT_SHOW_WRITABLE_COMPONENTS",
+    "showOIDCReservationLogin": "FRONTEND_SHOW_OIDC_RESERVATION_LOGIN",
+    "quickConnectEndorserName": "FRONTEND_QUICK_CONNECT_ENDORSER_NAME",
+    "requireEmailForReservation": "FRONTEND_REQUIRE_EMAIL_FOR_RESERVATION",
+    "session": {
+      "timeoutSeconds": "FRONTEND_SESSION_TIMEOUT_SECONDS",
+      "countdownSeconds": "FRONTEND_SESSION_COUNTDOWN_SECONDS"
+    },
+    "matomoUrl": "FRONTEND_MATOMO_URL",
+    "oidc": {
+      "active": "FRONTEND_INNKEEPER_OIDC_ACTIVE",
+      "authority": "FRONTEND_INNKEEPER_OIDC_AUTHORITY",
+      "client": "FRONTEND_INNKEEPER_OIDC_CLIENT",
+      "label": "FRONTEND_INNKEEPER_OIDC_LABEL",
+      "extraQueryParams": "FRONTEND_INNKEEPER_OIDC_EXTRA_PARAMS"
+    },
+    "ux": {
+      "appTitle": "UX_APP_TITLE",
+      "appInnkeeperTitle": "UX_APP_INNKEEPER_TITLE",
+      "sidebarTitle": "UX_SIDEBAR_TITLE",
+      "copyright": "UX_COPYRIGHT",
+      "owner": "UX_OWNER",
+      "coverImageCopyright": "UX_COVERIMAGE_COPYRIGHT",
+      "aboutBusiness": {
+        "title": "UX_ABOUT_TITLE",
+        "linkTitle": "UX_ABOUT_LINK_TITLE",
+        "link": "UX_ABOUT_LINK",
+        "imageUrl": "UX_ABOUT_IMAGE_URL"
+      },
+      "infoBanner": {
+        "message": "UX_INFO_BANNER_MESSAGE",
+        "messageLevel": "UX_INFO_BANNER_MESSAGE_LEVEL",
+        "showMessage": "UX_INFO_BANNER_SHOW_MESSAGE"
+      }
+    }
+  },
+  "image": {
+    "buildtime": "IMAGE_BUILDTIME",
+    "tag": "IMAGE_TAG",
+    "version": "IMAGE_VERSION"
+  },
+  "server": {
+    "tractionUrl": "SERVER_TRACTION_URL",
+    "oidc": {
+      "jwksUri": "SERVER_OIDC_JWKS",
+      "realm": "SERVER_OIDC_REALM",
+      "roleName": "SERVER_OIDC_ROLE"
+    },
+    "innkeeper": {
+      "user": "SERVER_INNKEEPER_USER",
+      "key": "SERVER_INNKEEPER_KEY"
+    },
+    "smtp": {
+      "server": "SERVER_SMTP_SERVER",
+      "port": "SERVER_SMTP_PORT",
+      "secure": "SERVER_SMTP_SECURE",
+      "user": "SERVER_SMTP_USER",
+      "password": "SERVER_SMTP_PASSWORD",
+      "senderAddress": "SERVER_SMTP_SENDER_ADDRESS",
+      "innkeeperInbox": "SERVER_SMTP_INNKEEPER_INBOX"
+    }
+  }
+}

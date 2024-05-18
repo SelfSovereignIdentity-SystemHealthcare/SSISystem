@@ -1,0 +1,88 @@
+@import '../variables.scss';
+
+// Data Tables
+.p-datatable {
+  // Headers
+  .p-datatable-header {
+    border-left-width: 1px;
+    border-right-width: 1px;
+  }
+  .p-datatable-header,
+  .p-datatable-wrapper .p-datatable-thead > tr > th {
+    background-color: $tenant-ui-panel-back-color;
+    border-color: $tenant-ui-panel-border-color;
+  }
+  .p-datatable-wrapper .p-datatable-thead > tr > th,
+  .p-datatable-wrapper tbody > tr > td {
+    border-color: $tenant-ui-panel-border-color;
+    &:first-child {
+      border-left-width: 1px;
+    }
+    &:last-child {
+      border-right-width: 1px;
+    }
+  }
+
+  // Cells
+  .p-datatable-wrapper td[role='cell'],
+  .p-datatable-wrapper th[role='columnheader'] {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  // Sort Columns
+  .p-sortable-column.p-highlight {
+    background-color: $tenant-ui-panel-back-color !important;
+    &,
+    .p-sortable-column-icon {
+      color: black !important;
+    }
+  }
+
+  // Paginator in table footer (more other general paginator tweaks below)
+  .p-paginator {
+    background-color: white;
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 5px;
+    padding-left: 0;
+    .p-paginator-rpp-options {
+      margin-left: auto;
+    }
+  }
+
+  // Buttons specifically in DataTable bodies
+  .p-datatable-tbody > tr > td {
+    .p-button,
+    .p-row-toggler {
+      color: $tenant-ui-button-link-color;
+    }
+  }
+}
+
+// Paginator
+.p-paginator {
+  .p-link {
+    color: $tenant-ui-button-link-color !important;
+    &.p-highlight {
+      background-color: #e9ecf1 !important;
+      border-radius: 2em;
+      padding: 0;
+    }
+    &:hover {
+      border-radius: 2em;
+    }
+  }
+  .p-paginator-rpp-options .p-dropdown-label {
+    padding-top: 8px;
+    margin-right: 15px;
+  }
+}
+
+// A specific divider used in expanded table rows
+.expand-divider {
+  border: 1px dashed grey;
+  width: 40px;
+  margin-inline-start: 0;
+}
