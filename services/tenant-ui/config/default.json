@@ -22,17 +22,17 @@
       "extraQueryParams": {}
     },
     "ux": {
-      "appTitle": "Traction Tenant Console",
-      "appInnkeeperTitle": "Traction Innkeeper Console",
-      "sidebarTitle": "TRACTION",
+      "appTitle": "SSISH Tenant Console",
+      "appInnkeeperTitle": "SSISH Innkeeper Console",
+      "sidebarTitle": "SSISH",
       "copyright": "",
       "owner": "",
-      "coverImageCopyright": "Photo by Kristoffer Fredriksson on StockSnap",
+      "coverImageCopyright": "",
       "aboutBusiness": {
-        "title": "Government of British Columbia",
-        "linkTitle": "BC Digital Trust Service Agreement",
-        "link": "https://github.com/bcgov/bc-vcpedia/blob/main/agents/bc-gov-agent-service.md",
-        "imageUrl": "/img/bc/bc_logo.png"
+        "title": "SSISH - Self Sovereign Identity System for Healthcare",
+        "linkTitle": "SSISH - TCC Matheus Lázaro - Ciência da Computação",
+        "link": "https://github.com/SelfSovereignIdentity-SystemHealthcare",
+        "imageUrl": "/img/IconeBlockchainSSI.png"
       },
       "infoBanner": {
         "message": "",
@@ -53,7 +53,7 @@
     "logLevel": "http",
     "port": "8080",
     "staticFiles": "../../frontend/dist",
-    "tractionUrl": "http://localhost:5100",
+    "SSISHUrl": "http://localhost:5100",
     "oidc": {
       "jwksUri": "https://dev.loginproxy.gov.bc.ca/auth/realms/digitaltrust-citz/protocol/openid-connect/certs",
       "realm": "digitaltrust-citz",
@@ -64,13 +64,13 @@
       "key": "change-me"
     },
     "smtp": {
-      "server": "apps.smtp.gov.bc.ca",
-      "port": 25,
+      "server": "smtp-relay.brevo.com",
+      "port": 587,
       "secure": false,
-      "user": "",
-      "password": "",
-      "senderAddress": "DoNotReplyTraction@gov.bc.ca",
-      "innkeeperInbox": "lucas.o'neil@gov.bc.ca"
+      "user": "75103f001@smtp-brevo.com",
+      "password": "sWH1vVR20nLE4tIQ",
+      "senderAddress": "matheus.lazaro@discente.ufg.br",
+      "innkeeperInbox": "matheus.lazaro@discente.ufg.br"
     }
   }
 }

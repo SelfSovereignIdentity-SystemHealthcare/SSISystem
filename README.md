@@ -14,17 +14,22 @@ Erro:
 Error response from daemon: driver failed programming external connectivity on endpoint scripts-traction-db-1 (8de0985b6ff5a01042d65f1c47b76690b54f030c34a9d9dbfdac66d0d3c21a0b): Error starting userland proxy: listen tcp4 0.0.0.0:5432: bind: address already in use
 
 sudo lsof -i :5432
-sudo kill xxxx
+sudo kill xxxxf
 ```
 
 ``` 
-Local SSI System Healthcare:
-301a871c-ae73-48b5-aa2d-613d5e96a59a
-8df14891-eec8-4883-852c-1beceddf40aa
+Local Médico: Dr. Sérgio
+3299a31c-3d31-47ca-8c04-a3b714ac64aa
+fc52738c-be63-4eda-a20d-a093c5bfb3d8
 
-Local Matheus Lázaro:
-eca391e7-078d-49b8-8e3d-dbcfa913d803
-57f35a4c-4d4a-402d-9d77-22306ce9dd18
+Local Paciente: Matheus Lázaro
+77f1f896-e97b-4b80-bae2-0f7a7b5913e3
+97c34901-88cc-41a2-bb8e-87f85fbb2dcc
+
+
+// Supondo que você esteja importando o store corretamente
+const reservationStore = useReservationStore();
+const reservationId = reservationStore.getReservationId();
 
 JSON de credencial de identificação de Paciente:
 

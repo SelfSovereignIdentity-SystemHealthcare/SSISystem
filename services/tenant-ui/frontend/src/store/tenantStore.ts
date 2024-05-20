@@ -1,5 +1,4 @@
 import { AdminConfig, EndorserInfo } from '@/types/acapyApi/acapyInterface';
-
 import { API_PATH } from '@/helpers/constants';
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref, Ref } from 'vue';
@@ -23,6 +22,7 @@ export const useTenantStore = defineStore('tenant', () => {
   const tenantConfig: any = ref(null);
   const tenantWallet: any = ref(null);
   const tenantDefaultSettings: any = ref(null);
+  const walletHash: any = ref(null); // Add walletHash to the state
 
   const { token } = storeToRefs(useTokenStore());
   const acapyApi = useAcapyApi();
@@ -529,6 +529,17 @@ export const useTenantStore = defineStore('tenant', () => {
     console.log('< setTenantLoginDataFromLocalStorage');
   }
 
+  async function setWalletHash(hash: string) {
+    console.log('> setWalletHash');
+    walletHash.value = hash;
+    console.log('< setWalletHash');
+  }
+
+  async function getWalletHash() {
+    console.log('> getWalletHash');
+    return walletHash.value;
+  }
+
   return {
     endorserConnection,
     endorserInfo,
@@ -566,6 +577,8 @@ export const useTenantStore = defineStore('tenant', () => {
     updateTenantSubWallet,
     updateTenantContact,
     waitForActiveEndorserConnection,
+    setWalletHash, // Added action
+    getWalletHash, // Added action
   };
 });
 
