@@ -80,6 +80,11 @@ import { TABLE_OPT } from '@/helpers/constants';
 import { storeToRefs } from 'pinia';
 // Other Components
 import EndorserConnect from './EndorserConnect.vue';
+import { useReservationStore } from '@/store'; // Importe o store global
+
+// Em qualquer lugar onde você precisa acessar o reservationId
+const globalReservationId = useReservationStore().getReservationId();
+console.log("globalReservationId: " + globalReservationId)
 
 const configStore = useConfigStore();
 const tenantStore = useTenantStore();
