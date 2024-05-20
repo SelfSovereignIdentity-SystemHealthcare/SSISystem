@@ -1,7 +1,7 @@
 <template>
   <div v-if="showDidRegister">
     <Button
-      title="Register Public DID"
+      title="Registrar DID Público"
       icon="pi pi-file-export"
       class="p-button-rounded p-button-icon-only p-button-text"
       @click="registerPublicDid()"
@@ -10,46 +10,91 @@
 
   <div v-if="showRegistered">
     <i
-      v-tooltip="'Public DID has been registered. See details below.'"
+      v-tooltip="'DID Público foi registrado. Veja os detalhes abaixo.'"
       class="pi pi-check-circle text-green-600"
     ></i>
   </div>
 </template>
 
 <script setup lang="ts">
-// Vue/Primevue
 import { computed } from 'vue';
+import axios from 'axios';
 import Button from 'primevue/button';
 import { useToast } from 'vue-toastification';
-// State
 import { useTenantStore } from '@/store';
 import { storeToRefs } from 'pinia';
+import { useReservationStore } from '@/store'; // Importe o store global
 
-// Props
 const props = defineProps<{
   ledgerInfo: any;
 }>();
 
 const toast = useToast();
-
-// State
 const tenantStore = useTenantStore();
 const { endorserConnection, publicDid, writeLedger } = storeToRefs(tenantStore);
 
-// Register DID
 const registerPublicDid = async () => {
   try {
     await tenantStore.registerPublicDid();
-    toast.success('Public DID registration sent');
+    toast.success('Registro de DID Público enviado');
+
+    const publicKey = publicDid.value?.did; // Supondo que publicDid.value.did contenha a publicKey
+
+    // Supondo que você esteja importando o store corretamente
+    var reservationStore = useReservationStore();
+    var reservationId = reservationStore.getReservationId();
+    await updateDidAsset({
+      "@assetType": "did",
+      "walletHash": reservationId, // Ajuste conforme necessário
+      "publicKey": publicKey
+    });
+
+    await registerBlockchainEvent({
+      asset: [
+        {
+          "@assetType": "ssishEvent",
+          "walletHash": reservationId,
+          "eventType": "DID registrado como emissor",
+          "timestamp": new Date().toISOString(),
+          "eventDetails": "DID Público foi registrado como emissor."
+        }
+      ]
+    });
   } catch (error) {
-    throw Error(`Failure while registering: ${error}`);
+    toast.error(`Falha ao registrar: ${error}`);
   }
 };
 
-// Details about current ledger from the store
+const updateDidAsset = async (data: any) => {
+  try {
+    await axios.put('http://localhost:80/api/invoke/updateAsset', { update: data }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache'
+      }
+    });
+    toast.success('Ativo DID atualizado com sucesso');
+  } catch (error) {
+    toast.error(`Falha ao atualizar o ativo DID: ${error}`);
+  }
+};
+
+const registerBlockchainEvent = async (data: any) => {
+  try {
+    await axios.post('http://localhost:80/api/invoke/createAsset', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache'
+      }
+    });
+    toast.success('Evento registrado na blockchain');
+  } catch (error) {
+    toast.error(`Falha ao registrar evento na blockchain: ${error}`);
+  }
+};
+
 const currWriteLedger = computed(() => writeLedger?.value?.ledger_id ?? null);
 
-// Show the DID registration button when the write ledger and endorser are set
 const showDidRegister = computed(
   () =>
     props.ledgerInfo.ledger_id === currWriteLedger.value &&
@@ -57,10 +102,7 @@ const showDidRegister = computed(
     endorserConnection.value?.state === 'active'
 );
 
-// Show the DID complete checkmark if it's sucessfull
-const hasPublicDid = computed(
-  () => !!publicDid.value && !!publicDid.value?.did
-);
+const hasPublicDid = computed(() => !!publicDid.value && !!publicDid.value.did);
 const showRegistered = computed(
   () =>
     props.ledgerInfo.ledger_id === currWriteLedger.value && hasPublicDid.value

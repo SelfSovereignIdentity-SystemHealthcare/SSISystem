@@ -1,73 +1,43 @@
 <template>
   <div v-if="showEndorserConnect">
-    <Button
-      title="Connect to endorser"
-      icon="pi pi-user-plus"
-      class="p-button-rounded p-button-icon-only p-button-text"
-      @click="connectToLedger()"
-    />
+    <Button title="Conectar ao endossante" icon="pi pi-user-plus" class="p-button-rounded p-button-icon-only p-button-text"
+      @click="connectToLedger()" />
   </div>
 
   <div v-if="showLedgerSwitch">
-    <Button
-      label="Switch Ledger"
-      icon="pi pi-arrow-right-arrow-left"
-      text
-      @click="switchLedger($event)"
-    />
-    <!-- <Button
-      title="Connect to endorser"
-      icon="pi pi-user-plus"
-      class="p-button-rounded p-button-icon-only p-button-text"
-      @click="
-        connectToLedger(
-          props.ledgerInfo.endorser_alias,
-          props.ledgerInfo.ledger_id
-        )
-      "
-    /> -->
+    <Button label="Trocar Ledger" icon="pi pi-arrow-right-arrow-left" text @click="switchLedger($event)" />
   </div>
 
-  <div
-    v-if="endorserConnection && props.ledgerInfo.ledger_id === currWriteLedger"
-    class="flex"
-  >
+  <div v-if="endorserConnection && props.ledgerInfo.ledger_id === currWriteLedger" class="flex">
     <div class="flex align-items-center mr-2">{{ $t('common.status') }}</div>
     <div class="flex align-items-center mr-1">
       <StatusChip :status="endorserConnection.state" />
     </div>
     <div v-if="canDeleteConnection" class="flex align-items-center">
-      <Button
-        title="Delete Connection"
-        icon="pi pi-trash"
-        class="p-button-rounded p-button-icon-only p-button-text"
-        @click="deleteConnection($event, endorserConnection.connection_id)"
-      />
+      <Button title="Excluir Conexão" icon="pi pi-trash" class="p-button-rounded p-button-icon-only p-button-text"
+        @click="deleteConnection($event, endorserConnection.connection_id)" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// Vue/Primevue
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import axios from 'axios';
 import Button from 'primevue/button';
 import { useToast } from 'vue-toastification';
 import { useConfirm } from 'primevue/useconfirm';
-// State
 import { useConfigStore, useConnectionStore, useTenantStore } from '@/store';
 import { storeToRefs } from 'pinia';
-// Other Components
 import StatusChip from '@/components/common/StatusChip.vue';
+import { useReservationStore } from '@/store'; // Importe o store global
 
-// Props
-const props = defineProps<{
-  ledgerInfo: any;
-}>();
+// Supondo que você esteja importando o store corretamente
+const reservationStore = useReservationStore();
+const reservationId = reservationStore.getReservationId();
 
 const confirm = useConfirm();
 const toast = useToast();
 
-// State
 const configStore = useConfigStore();
 const connectionStore = useConnectionStore();
 const tenantStore = useTenantStore();
@@ -75,9 +45,31 @@ const { config } = storeToRefs(configStore);
 const { endorserConnection, publicDid, tenantConfig, writeLedger } =
   storeToRefs(tenantStore);
 
-// Set the write ledger and then connect to the relevant endorser
+const props = defineProps<{
+  ledgerInfo: any;
+}>();
+
+const registerBlockchainEvent = async (data: any) => {
+  try {
+    // Corrigindo o walletHash para usar o da carteira atual
+    const walletHash = reservationId ?? "unknown";
+    data.asset.forEach((asset: any) => {
+      asset.walletHash = reservationId ?? "unknown";
+    });
+
+    await axios.post('http://localhost:80/api/invoke/createAsset', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache',
+      },
+    });
+    toast.success('Evento registrado na Blockchain!');
+  } catch (error) {
+    toast.error(`Falha ao registrar o evento na Blockchain!: ${error}`);
+  }
+};
+
 const connectToLedger = async (switchLeger = false) => {
-  // Track the current connected to ledger (or undefined if none)
   const prevLedgerId = writeLedger?.value?.ledger_id;
   try {
     const quickConnect =
@@ -88,8 +80,20 @@ const connectToLedger = async (switchLeger = false) => {
     if (quickConnect) {
       await registerPublicDid();
     }
+    const event = {
+      asset: [
+        {
+          "@assetType": "ssishEvent",
+          // Corrigindo para usar o walletHash da carteira atual
+          "walletHash": reservationId ?? "unknown",
+          "eventType": "connect",
+          "timestamp": new Date().toISOString(),
+          "eventDetails": "Tentativa de conexão com o endossante",
+        },
+      ],
+    };
+    await registerBlockchainEvent(event);
   } catch (error) {
-    // If we're switching ledgers, and it fails, revert to the old one
     if (prevLedgerId && switchLeger) {
       try {
         await tenantStore.setWriteLedger(prevLedgerId);
@@ -98,7 +102,7 @@ const connectToLedger = async (switchLeger = false) => {
         toast.error(`${endorserError}`);
       }
       toast.error(
-        `${error}, reverting to previously set ledger ${prevLedgerId}`
+        `${error}, revertendo para o ledger previamente configurado ${prevLedgerId}`
       );
     } else {
       toast.error(`${error}`);
@@ -106,52 +110,40 @@ const connectToLedger = async (switchLeger = false) => {
   }
 };
 
-// Connect to endorser
 const connectToEndorser = async (quickConnect = false) => {
   try {
     await tenantStore.connectToEndorser(quickConnect);
-    toast.success('Endorser connection request sent');
+    toast.success('Solicitação de conexão ao endossante enviada');
   } catch (error) {
-    throw Error(`Failure while connecting: ${error}`);
+    throw Error(`Falha durante a conexão: ${error}`);
   }
 };
 
-// Register DID (only for "quick connect")
 const registerPublicDid = async () => {
   try {
     await tenantStore.registerPublicDid();
-    toast.success('Public DID registration sent');
+    toast.success('DID público - registro enviado');
   } catch (error) {
-    throw Error(`Failure while registering: ${error}`);
+    throw Error(`Falha durante o registro: ${error}`);
   }
 };
 
-// Details about current ledger from the store
 const currWriteLedger = computed(() => writeLedger?.value?.ledger_id ?? null);
 
-// Show the endorser connection button when...
 const showEndorserConnect = computed(() => {
-  //... no current write ledger or endorser conn is set
   if (!currWriteLedger.value || !endorserConnection.value) {
     return true;
   }
-  //... the write ledger IS set but there's no connection to it's endorser
   if (
     !endorserConnection.value &&
     props.ledgerInfo.ledger_id === currWriteLedger.value
   ) {
     return true;
   }
-  //... otherwise don't
   return false;
 });
 
-// Show the ledger switch button when...
 const showLedgerSwitch = computed(() => {
-  // There is an active endorser connection
-  // and we're looking at the row that's not the current ledger
-  // and the DID is set (IE the issuer process is complete)
-  // and the innkeeper has allowed you to swtich ledger
   if (
     tenantConfig.value.enable_ledger_switch &&
     props.ledgerInfo.ledger_id !== currWriteLedger.value
@@ -161,13 +153,12 @@ const showLedgerSwitch = computed(() => {
   return false;
 });
 
-// Switch ledger confirmation
 const switchLedger = (event: any) => {
   confirm.require({
     target: event.currentTarget,
     message:
-      'Switching may have consequences if you have previous issuance. \r\n At this time it will only work if the Endorser switching to is set to auto-accept and auto-endorse.',
-    header: 'Confirmation',
+      'Trocar pode ter consequências se você tiver emissões anteriores. \r\n Neste momento, funcionará apenas se o endossante para o qual você está trocando estiver configurado para autoaceitar e auto-endossar.',
+    header: 'Confirmação',
     icon: 'pi pi-exclamation-triangle',
     accept: () => {
       connectToLedger(true);
@@ -175,18 +166,16 @@ const switchLedger = (event: any) => {
   });
 };
 
-// Can delete connection
 const hasPublicDid = computed(() => !!publicDid.value && !!publicDid.value.did);
 const canDeleteConnection = computed(
   () => endorserConnection.value?.state !== 'active' || !hasPublicDid.value
 );
 
-// Delete endorser connection
 const deleteConnection = (event: any, id: string) => {
   confirm.require({
     target: event.currentTarget,
-    message: 'Are you sure you want to disconnect from this Endorser?',
-    header: 'Confirmation',
+    message: 'Você tem certeza que deseja desconectar deste endossante?',
+    header: 'Confirmação',
     icon: 'pi pi-exclamation-triangle',
     accept: () => {
       doDelete(id);
@@ -198,11 +187,11 @@ const doDelete = (id: string) => {
     .deleteConnection(id)
     .then(() => {
       tenantStore.getEndorserConnection();
-      toast.success(`Endorser Connection Removed`);
+      toast.success(`Conexão com o endossante removida`);
     })
     .catch((err) => {
       console.error(err);
-      toast.error(`Failure: ${err}`);
+      toast.error(`Falha: ${err}`);
     });
 };
 </script>

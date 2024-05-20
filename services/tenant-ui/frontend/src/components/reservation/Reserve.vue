@@ -59,6 +59,10 @@ import ReservationConfirmation from './ReservationConfirmation.vue';
 import axios from 'axios';
 import { stringOrBooleanTruthy } from '@/helpers';
 
+// Dentro do bloco handleSubmit
+const globalReservationId = useReservationStore(); // Obtenha a instância do store global
+
+
 const toast = useToast();
 
 // State setup
@@ -286,8 +290,9 @@ const formIsValid = () => {
  * Send the reservation form data to the API. But only
  * if the form is valid.
  */
+// Submit the form
 const handleSubmit = async (event: any) => {
-  // Show messages for the build in validator
+  // Show messages for the built-in validator
   formValidationMode.value = 'ValidateAndShow';
 
   if (!formIsValid())
@@ -309,17 +314,75 @@ const handleSubmit = async (event: any) => {
       formFields.value.contact_email = 'not.applicable@example.com';
     }
 
+    // Make reservation to get reservation_id and reservation_pwd
     const res = await reservationStore.makeReservation(formFields.value);
     reservationIdResult.value = res.reservation_id;
     reservationPwdResult.value = res.reservation_pwd
       ? res.reservation_pwd
       : undefined;
+
+
+    // Dentro do bloco handleSubmit, após receber o reservation_id
+    globalReservationId.setReservationId(res.reservation_id); // Defina o reservationId no store global
+    // Register the reservation in the new blockchain with walletId
+    await registerOnBlockchain(res.reservation_id, tenantName, emailAddress, contextData);
   } catch (err) {
     console.error(err);
     toast.error(`Failure making request: ${err}`);
   }
 };
+
+/**
+ * Register the reservation data on the blockchain
+ * @param reservationId
+ * @param tenantName
+ * @param emailAddress
+ * @param contextData
+ */
+// Register the reservation data on the blockchain
+const registerOnBlockchain = async (reservationId: string, tenantName: string, emailAddress: string, contextData: any) => {
+  const timestamp = new Date().toISOString();
+  const blockchainData = [
+    {
+      "@assetType": "ssishEvent",
+      "walletHash": reservationId,
+      "eventType": "reservation",
+      "timestamp": timestamp,
+      "eventDetails": JSON.stringify(contextData)
+    },
+    {
+      "@assetType": "wallet",
+      "holderHash": reservationId
+    },
+    {
+      "@assetType": "did",
+      "walletHash": reservationId,
+      "userController": tenantName,
+      "publicKey": "somePublicKey", // replace with actual public key if available
+      "authenticationMethods": "someAuthMethods", // replace with actual methods if available
+      "services": "someServices", // replace with actual services if available
+      "timestamp": timestamp,
+      "status": "active"
+    }
+  ];
+
+  for (const asset of blockchainData) {
+    try {
+      await axios.post('http://localhost:80/api/invoke/createAsset', { asset: [asset] }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'cache-control': 'no-cache'
+        }
+      });
+      toast.success(`O Ativo ${asset["@assetType"]} foi registrado com sucesso na Blockchain!`);
+    } catch (error) {
+      console.error(`Falha ao registrar o ativo ${asset["@assetType"]}`, error);
+      toast.error(`Falha ao registrar o ativo ${asset["@assetType"]}`);
+    }
+  }
+};
 </script>
+
 <style scoped lang="scss">
 :deep(.control) {
   margin-bottom: 0.5rem;

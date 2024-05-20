@@ -9,6 +9,29 @@ import { ref, Ref } from 'vue';
 import { useConfigStore } from './configStore';
 
 export const useReservationStore = defineStore('reservation', () => {
+  const reservationId: Ref<string | null> = ref(null);
+
+  function setReservationId(id: string) {
+    reservationId.value = id;
+    sessionStorage.setItem('reservationId', id); // Use sessionStorage se preferir
+  }
+
+  function loadReservationId() {
+    const storedId = sessionStorage.getItem('reservationId'); // Use sessionStorage se preferir
+    if (storedId) {
+      reservationId.value = storedId;
+    }
+  }
+
+  function clearReservationId() {
+    reservationId.value = null;
+    sessionStorage.removeItem('reservationId'); // Use sessionStorage se preferir
+  }
+
+  function getReservationId() {
+    return sessionStorage.getItem('reservationId');//reservationId.value;
+  }
+
   const { config } = storeToRefs(useConfigStore());
   // A raw api call without using the interceptors from the acapyApiStore
   // Needed for the open call to reservation at this point
@@ -195,6 +218,11 @@ export const useReservationStore = defineStore('reservation', () => {
     makeReservation,
     checkReservation,
     checkIn,
+    reservationId,
+    setReservationId,
+    loadReservationId,
+    clearReservationId,
+    getReservationId // Adicionando o getter aqui
   };
 });
 
