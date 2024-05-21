@@ -154,6 +154,9 @@ const tokenStore = useTokenStore();
 // use the loading state from the store to disable the button...
 const { loading, token } = storeToRefs(useTokenStore());
 const tenantStore = useTenantStore();
+// tenant should be loaded by login...
+import { API_PATH } from '@/helpers/constants';
+console.log("API_PATH.TENANT_CONTACT_EMAIL: " + API_PATH.TENANT_CONTACT_EMAIL)
 
 // Form submission
 const submitted = ref(false);
@@ -167,6 +170,8 @@ const handleSubmit = async (isFormValid: boolean) => {
 
   // Use the wallet creds to get a token
   try {
+    
+
     // Trim id/key inputs
     formFields.walletId = formFields.walletId.trim();
     formFields.walletSecret = formFields.walletSecret.trim();
@@ -183,6 +188,7 @@ const handleSubmit = async (isFormValid: boolean) => {
         false
       );
     }
+    
     console.log(token.value);
   } catch (err: any) {
     console.error(err);

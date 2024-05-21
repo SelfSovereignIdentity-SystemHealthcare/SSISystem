@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit(!v$.$invalid)">
+    <!-- Adicionei a lógica de exibição para mostrar o tipo de convite e se é de uso único ou múltiplo -->
     <div v-if="!invitation_url">
       <!-- Invitation type -->
       <div class="mb-3">
@@ -143,6 +144,12 @@ import { useVuelidate } from '@vuelidate/core';
 import { useToast } from 'vue-toastification';
 // Other Components
 import QRCode from '../../common/QRCode.vue';
+import { useReservationStore } from '@/store'; // Importe o store global
+
+import axios from 'axios';
+// Supondo que você esteja importando o store corretamente
+const reservationStore = useReservationStore();
+const reservationId = reservationStore.getReservationId();
 
 const connectionStore = useConnectionStore();
 
@@ -210,12 +217,47 @@ const handleSubmit = async (isFormValid: boolean) => {
       console.log(`invitation_url: ${invitation_url.value}`);
       toast.info('Invitation Created');
       emit('success');
+
+      // Registrar o evento na blockchain
+      const event = {
+        asset: [
+          {
+            "@assetType": "ssishEvent",
+            "walletHash": reservationId ?? "unknown",
+            "eventType": "Shipping SSISH CONNECTION INVITATION", // Tipo de evento desejado
+            "timestamp": new Date().toISOString(),
+            "eventDetails": "Convite de conexão enviado",
+          },
+        ],
+      };
+      await registerBlockchainEvent(event);
     }
     return false;
   } catch (error) {
     toast.error(`Failure: ${error}`);
   } finally {
     submitted.value = false;
+  }
+};
+
+
+const registerBlockchainEvent = async (data: any) => {
+  try {
+    // Corrigindo o walletHash para usar o da carteira atual
+    const walletHash = reservationId ?? "unknown";
+    data.asset.forEach((asset: any) => {
+      asset.walletHash = reservationId ?? "unknown";
+    });
+
+    await axios.post('http://localhost:80/api/invoke/createAsset', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache',
+      },
+    });
+    toast.success('Evento registrado na Blockchain!');
+  } catch (error) {
+    toast.error(`Falha ao registrar o evento na Blockchain!: ${error}`);
   }
 };
 </script>
@@ -232,3 +274,4 @@ const handleSubmit = async (isFormValid: boolean) => {
   }
 }
 </style>
+

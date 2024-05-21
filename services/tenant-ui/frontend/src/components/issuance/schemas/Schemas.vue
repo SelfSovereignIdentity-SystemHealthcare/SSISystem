@@ -47,12 +47,7 @@
           <div
             v-if="stringOrBooleanTruthy(config.frontend.showWritableComponents)"
           >
-            <Button
-              :title="t('configuration.schemas.delete')"
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-icon-only p-button-text"
-              @click="deleteSchema($event, data)"
-            />
+            
             <CopySchema :stored-schema="data" :table-reload="loadTable" />
           </div>
         </template>

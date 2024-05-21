@@ -23,8 +23,8 @@ Local Médico: Dr. Sérgio
 fc52738c-be63-4eda-a20d-a093c5bfb3d8
 
 Local Paciente: Matheus Lázaro
-77f1f896-e97b-4b80-bae2-0f7a7b5913e3
-97c34901-88cc-41a2-bb8e-87f85fbb2dcc
+c38aea37-752d-4120-b313-bb3b4d186b6d
+2d43b9bc-bf0d-464d-abcd-56013c20543b
 
 
 // Supondo que você esteja importando o store corretamente

@@ -61,6 +61,7 @@ import Button from 'primevue/button';
 import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from 'vue-toastification';
+import axios from 'axios';
 // Source
 import ValidatedField from '@/components/common/ValidatedField.vue';
 import errorHandler from '@/helpers/errorHandler';
@@ -70,7 +71,11 @@ import { Attribute } from '@/types';
 import { SchemaSendRequest } from '@/types/acapyApi/acapyInterface';
 import Attributes from './Attributes.vue';
 import ToggleJson from '@/components/common/ToggleJson.vue';
+import { useReservationStore } from '@/store'; // Importe o store global
 
+// Supondo que você esteja importando o store corretamente
+const reservationStore = useReservationStore();
+const reservationId = reservationStore.getReservationId();
 const toast = useToast();
 const { t } = useI18n();
 
@@ -213,38 +218,123 @@ const submitted = ref(false);
 const handleSubmit = async (isFormValid: boolean) => {
   submitted.value = true;
 
+try {
+  if (!isFormValid) return;
+
+  const payload: SchemaSendRequest | undefined = jsonVal.value.showRawJson
+    ? jsonToSchema(jsonVal.value.valuesJson)
+    : convertToJson();
+
+  if (!payload) return;
+
+  if (!payload.attributes.length) {
+    toast.error(t('configuration.schemas.emptyAttributes'));
+    return;
+  }
+
+  if (payload) {
+    await governanceStore.createSchema(payload);
+    await registerVerifiableCredential(payload);
+  } else {
+    return;
+  }
+  toast.success(t('configuration.schemas.postStart'));
+  emit('success');
+  emit('closed', payload);
+  if (props.onClose) props.onClose(payload);
+} catch (error) {
+  errorHandler({
+    error,
+    existsMessage: t('configuration.schemas.alreadyExists'),
+  });
+} finally {
+  submitted.value = false;
+}
+};
+
+const registerVerifiableCredential = async (payload: SchemaSendRequest) => {
   try {
-    if (!isFormValid) return;
+    // Cria um novo evento de ativo para a credencial verificável
+    const event = {
+      asset: [
+        {
+          "@assetType": "verifiableCredential",
+          "issuerHash": reservationId,
+          "receiverHash": "pending",
+          "credentialType": "schema",
+          "credentialData": JSON.stringify(payload),
+          "status": "issued"
+        }
+      ]
+    };
 
-    const payload: SchemaSendRequest | undefined = jsonVal.value.showRawJson
-      ? jsonToSchema(jsonVal.value.valuesJson)
-      : convertToJson();
-
-    if (!payload) return;
-
-    if (!payload.attributes.length) {
-      toast.error(t('configuration.schemas.emptyAttributes'));
-      return;
-    }
-
-    if (payload) {
-      await governanceStore.createSchema(payload);
-    } else {
-      return;
-    }
-    toast.success(t('configuration.schemas.postStart'));
-    emit('success');
-    emit('closed', payload);
-    if (props.onClose) props.onClose(payload);
-  } catch (error) {
-    errorHandler({
-      error,
-      existsMessage: t('configuration.schemas.alreadyExists'),
+    // Envia o evento para criar a credencial verificável
+    const response = await axios.post('http://localhost:80/api/invoke/createAsset', event, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache',
+      },
     });
-  } finally {
-    submitted.value = false;
+
+    // Notifica o sucesso da criação da credencial
+    toast.success('Verifiable Credential registrada na Blockchain!');
+
+    // Extrai os dados da credencial do evento
+    const credentialData = event.asset[0].credentialData;
+
+    // Supõe que a resposta contém os dados do ativo criado
+    const createAssetResponse = response.data;
+    const verifiableCredentialKey = createAssetResponse[0]["@key"];
+
+    // Faz uma requisição POST para obter as credenciais existentes
+    const walletResponse = await axios.post('http://localhost:80/api/query/readAsset', {
+      key: {
+        "@assetType": "wallet",
+        "holderHash": reservationId
+      }
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache',
+      },
+    });
+
+    // Processa a resposta para obter as credenciais existentes
+    const walletData = walletResponse.data;
+    const existingCredentials = walletData.credentials || [];
+
+    // Adiciona a nova credencial sem substituir as existentes
+    const updatedCredentials = [
+      ...existingCredentials,
+      { "@key": verifiableCredentialKey }
+    ];
+
+    // Prepara o evento de atualização com as credenciais atualizadas
+    const updateEvent = {
+      update: {
+        "@assetType": "wallet",
+        "holderHash": reservationId,
+        "credentials": updatedCredentials
+      }
+    };
+
+    // Envia o evento de atualização para adicionar a nova credencial
+    await axios.put('http://localhost:80/api/invoke/updateAsset', updateEvent, {
+      headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache',
+      },
+    });
+
+    // Notifica o sucesso da adição da nova credencial
+    toast.success('Nova credencial verificável adicionada à wallet!');
+  } catch (error) {
+    // Notifica o erro ocorrido durante o registro ou atualização
+    toast.error(`Falha ao registrar ou atualizar o Verifiable Credential na Blockchain: ${error}`);
   }
 };
+
+
 </script>
 
 <style scoped>
@@ -264,3 +354,4 @@ form {
   margin-bottom: 10px;
 }
 </style>
+
