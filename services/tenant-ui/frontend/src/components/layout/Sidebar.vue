@@ -65,12 +65,6 @@ const items = ref([
   },
 
   {
-    label: t('common.credentials'),
-    icon: 'pi pi-fw pi-wallet',
-    route: '/holder/credentials',
-  },
-
-  {
     label: t('configuration.configuration'),
     icon: 'pi pi-fw pi-file',
     items: [

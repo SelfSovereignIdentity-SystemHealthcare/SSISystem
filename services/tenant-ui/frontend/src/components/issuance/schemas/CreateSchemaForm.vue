@@ -75,7 +75,7 @@ import { useReservationStore } from '@/store'; // Importe o store global
 
 // Supondo que você esteja importando o store corretamente
 const reservationStore = useReservationStore();
-const reservationId = reservationStore.getReservationId();
+const walletIdHash = reservationStore.getWalletIdHash();
 const toast = useToast();
 const { t } = useI18n();
 
@@ -259,10 +259,10 @@ const registerVerifiableCredential = async (payload: SchemaSendRequest) => {
       asset: [
         {
           "@assetType": "verifiableCredential",
-          "issuerHash": reservationId,
+          "issuerHash": walletIdHash,
           "receiverHash": "pending",
           "credentialType": "schema",
-          "credentialData": JSON.stringify(payload),
+          "credentialData": JSON.stringify({ attributes: payload.attributes }),
           "status": "issued"
         }
       ]
@@ -290,7 +290,7 @@ const registerVerifiableCredential = async (payload: SchemaSendRequest) => {
     const walletResponse = await axios.post('http://localhost:80/api/query/readAsset', {
       key: {
         "@assetType": "wallet",
-        "holderHash": reservationId
+        "holderHash": walletIdHash
       }
     }, {
       headers: {
@@ -313,7 +313,7 @@ const registerVerifiableCredential = async (payload: SchemaSendRequest) => {
     const updateEvent = {
       update: {
         "@assetType": "wallet",
-        "holderHash": reservationId,
+        "holderHash": walletIdHash,
         "credentials": updatedCredentials
       }
     };
@@ -333,6 +333,7 @@ const registerVerifiableCredential = async (payload: SchemaSendRequest) => {
     toast.error(`Falha ao registrar ou atualizar o Verifiable Credential na Blockchain: ${error}`);
   }
 };
+
 
 
 </script>

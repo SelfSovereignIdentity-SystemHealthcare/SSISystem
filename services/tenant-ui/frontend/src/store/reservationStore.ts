@@ -10,10 +10,11 @@ import { useConfigStore } from './configStore';
 
 export const useReservationStore = defineStore('reservation', () => {
   const reservationId: Ref<string | null> = ref(null);
+  const walletIdHash: Ref<string | null> = ref(null);
 
-  function setReservationId(id: string) {
-    reservationId.value = id;
-    sessionStorage.setItem('reservationId', id); // Use sessionStorage se preferir
+  function setWalletIdHash(id: string) {
+    walletIdHash.value = id;
+    sessionStorage.setItem('walletIdHash', id); // Use sessionStorage se preferir
   }
 
   function loadReservationId() {
@@ -28,8 +29,8 @@ export const useReservationStore = defineStore('reservation', () => {
     sessionStorage.removeItem('reservationId'); // Use sessionStorage se preferir
   }
 
-  function getReservationId() {
-    return sessionStorage.getItem('reservationId');//reservationId.value;
+  function getWalletIdHash() {
+    return sessionStorage.getItem('walletIdHash');//reservationId.value;
   }
 
   const { config } = storeToRefs(useConfigStore());
@@ -219,10 +220,10 @@ export const useReservationStore = defineStore('reservation', () => {
     checkReservation,
     checkIn,
     reservationId,
-    setReservationId,
+    setWalletIdHash,
     loadReservationId,
     clearReservationId,
-    getReservationId // Adicionando o getter aqui
+    getWalletIdHash // Adicionando o getter aqui
   };
 });
 

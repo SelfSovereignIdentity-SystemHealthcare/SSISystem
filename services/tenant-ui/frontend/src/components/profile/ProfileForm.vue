@@ -51,4 +51,10 @@ import { useTenantStore } from '@/store';
 
 // tenant should be loaded by login...
 const { tenant } = storeToRefs(useTenantStore());
+
+import { useReservationStore } from '@/store';
+
+const reservationStore = useReservationStore();
+const walletIdHash = reservationStore.getWalletIdHash();
+console.log("walletIdHash profileForm: " + walletIdHash)
 </script>

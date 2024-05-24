@@ -33,7 +33,7 @@ import { useReservationStore } from '@/store'; // Importe o store global
 
 // Supondo que você esteja importando o store corretamente
 const reservationStore = useReservationStore();
-const reservationId = reservationStore.getReservationId();
+const getWalletIdHash = reservationStore.getWalletIdHash();
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -52,9 +52,9 @@ const props = defineProps<{
 const registerBlockchainEvent = async (data: any) => {
   try {
     // Corrigindo o walletHash para usar o da carteira atual
-    const walletHash = reservationId ?? "unknown";
+    const walletHash = getWalletIdHash ?? "unknown";
     data.asset.forEach((asset: any) => {
-      asset.walletHash = reservationId ?? "unknown";
+      asset.walletHash = getWalletIdHash ?? "unknown";
     });
 
     await axios.post('http://localhost:80/api/invoke/createAsset', data, {
@@ -85,7 +85,7 @@ const connectToLedger = async (switchLeger = false) => {
         {
           "@assetType": "ssishEvent",
           // Corrigindo para usar o walletHash da carteira atual
-          "walletHash": reservationId ?? "unknown",
+          "walletHash": getWalletIdHash ?? "unknown",
           "eventType": "connect",
           "timestamp": new Date().toISOString(),
           "eventDetails": "Tentativa de conexão com o endossante",

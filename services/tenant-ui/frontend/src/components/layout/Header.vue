@@ -1,22 +1,38 @@
 <template>
   <Toolbar class="traction-header">
     <template #start>
-      <div
-        class="hamburger"
-        :title="$t('layout.header.toggleSideMenu')"
-        @click="toggleSidebar"
-      >
+      <div class="hamburger" :title="$t('layout.header.toggleSideMenu')" @click="toggleSidebar">
         <i class="pi pi-bars p-toolbar-separator mr-2" />
+      </div>
+
+      <div style="display: flex; align-items: center; color: rgb(1, 122, 167); font-family: Poppins, sans-serif;">
+        <img src="../../IconeBlockchainSSI.png" alt="SSI Icon" style="padding-right: 10px;height: 50px; margin-bottom: 1px;" />
+        <span>Self Sovereign Identity System for Healthcare</span>
+        <br/>
+        <p style="padding-left: 10px; font-size: 75%; color: black;">TCC Matheus Lázaro - Ciência da Computação - INF UFG</p>
       </div>
     </template>
 
     <template #end>
-      <LocaleSwitcher />
+      
       <ProfileButton />
       <SessionTimer />
     </template>
   </Toolbar>
 </template>
+
+<style>
+/* Adicione a fonte Poppins aqui */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Aplicar a fonte Poppins */
+.traction-header {
+  font-family: 'Poppins', sans-serif;
+}
+</style>
+
+
+
 
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar';
@@ -59,6 +75,7 @@ const toggleSidebar = () => {
   padding: 0.75rem;
   opacity: 0.5;
 }
+
 .hamburger:hover {
   transform: scale(1.2) translate(0, 0.1rem);
   transition: 0.2s ease-in-out;

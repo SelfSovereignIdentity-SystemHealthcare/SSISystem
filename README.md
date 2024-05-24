@@ -23,9 +23,14 @@ Local Médico: Dr. Sérgio
 fc52738c-be63-4eda-a20d-a093c5bfb3d8
 
 Local Paciente: Matheus Lázaro
-c38aea37-752d-4120-b313-bb3b4d186b6d
-2d43b9bc-bf0d-464d-abcd-56013c20543b
+64769f90-fdc7-496b-b6e7-e3547134d6cf
+d5de8282-f017-4bc0-8bbb-5daebec172c6
 
+walletIdHash: 1952b22123f7847b88f690cb6acd017a49f27e615ad10ec40ec3d0998e2b5bec
+
+sandbox:
+1a56df52-0271-4e11-a584-6127d5b620cd
+8c72f095-6928-4b13-a432-1fd5b1f17250
 
 // Supondo que você esteja importando o store corretamente
 const reservationStore = useReservationStore();

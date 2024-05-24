@@ -149,7 +149,7 @@ import { useReservationStore } from '@/store'; // Importe o store global
 import axios from 'axios';
 // Supondo que você esteja importando o store corretamente
 const reservationStore = useReservationStore();
-const reservationId = reservationStore.getReservationId();
+const walletIdHash = reservationStore.getWalletIdHash();
 
 const connectionStore = useConnectionStore();
 
@@ -223,7 +223,7 @@ const handleSubmit = async (isFormValid: boolean) => {
         asset: [
           {
             "@assetType": "ssishEvent",
-            "walletHash": reservationId ?? "unknown",
+            "walletHash": walletIdHash ?? "unknown",
             "eventType": "Shipping SSISH CONNECTION INVITATION", // Tipo de evento desejado
             "timestamp": new Date().toISOString(),
             "eventDetails": "Convite de conexão enviado",
@@ -244,9 +244,9 @@ const handleSubmit = async (isFormValid: boolean) => {
 const registerBlockchainEvent = async (data: any) => {
   try {
     // Corrigindo o walletHash para usar o da carteira atual
-    const walletHash = reservationId ?? "unknown";
+    const walletHash = walletIdHash ?? "unknown";
     data.asset.forEach((asset: any) => {
-      asset.walletHash = reservationId ?? "unknown";
+      asset.walletHash = walletIdHash ?? "unknown";
     });
 
     await axios.post('http://localhost:80/api/invoke/createAsset', data, {

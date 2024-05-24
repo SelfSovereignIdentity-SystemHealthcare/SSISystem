@@ -126,6 +126,11 @@ import { useVuelidate } from '@vuelidate/core';
 // State
 import { useTenantStore, useTokenStore } from '../store';
 import { storeToRefs } from 'pinia';
+import { useReservationStore } from '@/store';
+const { walletId } = storeToRefs(useReservationStore());
+console.log("walletId loginForm: "  + walletId)
+
+const reservationStore = useReservationStore();
 
 const toast = useToast();
 const router = useRouter();
@@ -155,8 +160,13 @@ const tokenStore = useTokenStore();
 const { loading, token } = storeToRefs(useTokenStore());
 const tenantStore = useTenantStore();
 // tenant should be loaded by login...
-import { API_PATH } from '@/helpers/constants';
-console.log("API_PATH.TENANT_CONTACT_EMAIL: " + API_PATH.TENANT_CONTACT_EMAIL)
+import CryptoJS from 'crypto-js';
+/**
+ * Gerar hash SHA256
+ */
+ function gerarHashSHA256(email: string) {
+  return CryptoJS.SHA256(email).toString(CryptoJS.enc.Hex);
+}
 
 // Form submission
 const submitted = ref(false);
@@ -177,6 +187,12 @@ const handleSubmit = async (isFormValid: boolean) => {
     formFields.walletSecret = formFields.walletSecret.trim();
     formFields.tenantId = formFields.tenantId.trim();
     formFields.apiKey = formFields.apiKey.trim();
+
+    const walletIdHash = gerarHashSHA256(formFields.walletId);
+    reservationStore.setWalletIdHash(walletIdHash); // Define o reservationId no store global
+
+    const walletIdHash2 = reservationStore.getWalletIdHash();
+    console.log("walletIdHash profileForm: " + walletIdHash2)
 
     // Get a token
     if (activeTab.value === 1) {

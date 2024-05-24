@@ -43,10 +43,6 @@
       <Column :expander="true" header-style="width: 3rem" />
       <Column header="Actions">
         <template #body="{ data }">
-          <DeleteCredentialExchangeButton
-            v-if="stringOrBooleanTruthy(config.frontend.showWritableComponents)"
-            :cred-exch-id="data.credential_exchange_id"
-          />
 
           <RevokeCredentialButton
             v-if="stringOrBooleanTruthy(config.frontend.showWritableComponents)"

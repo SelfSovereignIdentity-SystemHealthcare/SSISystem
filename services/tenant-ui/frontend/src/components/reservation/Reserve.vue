@@ -60,7 +60,6 @@ import axios from 'axios';
 import { stringOrBooleanTruthy } from '@/helpers';
 import CryptoJS from 'crypto-js';
 
-
 function gerarHashSHA256(email: string) {
   return CryptoJS.SHA256(email).toString(CryptoJS.enc.Hex);
 }
@@ -326,11 +325,10 @@ const handleSubmit = async (event: any) => {
       ? res.reservation_pwd
       : undefined;
 
-
     // Dentro do bloco handleSubmit, após receber o reservation_id
-    globalReservationId.setReservationId(gerarHashSHA256(emailAddress)) //(res.reservation_id); // Defina o reservationId no store global
+    //globalReservationId.setReservationId(gerarHashSHA256(res.reservation_id)) //(res.reservation_id); // Defina o reservationId no store global
     // Register the reservation in the new blockchain with walletId
-    await registerOnBlockchain(gerarHashSHA256(emailAddress), tenantName, emailAddress, contextData);
+    //await registerOnBlockchain(gerarHashSHA256(res.reservation_id), tenantName, emailAddress, contextData);
   } catch (err) {
     console.error(err);
     toast.error(`Failure making request: ${err}`);
@@ -345,23 +343,23 @@ const handleSubmit = async (event: any) => {
  * @param contextData
  */
 // Register the reservation data on the blockchain
-const registerOnBlockchain = async (emailHash: string, tenantName: string, emailAddress: string, contextData: any) => {
+const registerOnBlockchain = async (reservationIdHash: string, tenantName: string, emailAddress: string, contextData: any) => {
   const timestamp = new Date().toISOString();
   const blockchainData = [
     {
       "@assetType": "ssishEvent",
-      "walletHash": emailHash,
+      "walletHash": reservationIdHash,
       "eventType": "reservation",
       "timestamp": timestamp,
       "eventDetails": JSON.stringify(contextData)
     },
     {
       "@assetType": "wallet",
-      "holderHash": emailHash
+      "holderHash": reservationIdHash
     },
     {
       "@assetType": "did",
-      "walletHash": emailHash,
+      "walletHash": reservationIdHash,
       "userController": tenantName,
       "publicKey": "somePublicKey", // replace with actual public key if available
       "authenticationMethods": "someAuthMethods", // replace with actual methods if available

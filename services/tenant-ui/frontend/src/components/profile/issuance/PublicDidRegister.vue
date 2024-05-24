@@ -42,10 +42,10 @@ const registerPublicDid = async () => {
 
     // Supondo que você esteja importando o store corretamente
     var reservationStore = useReservationStore();
-    var reservationId = reservationStore.getReservationId();
+    var walletIdHash = reservationStore.getWalletIdHash();
     await updateDidAsset({
       "@assetType": "did",
-      "walletHash": reservationId, // Ajuste conforme necessário
+      "walletHash": walletIdHash, // Ajuste conforme necessário
       "publicKey": publicKey
     });
 
@@ -53,7 +53,7 @@ const registerPublicDid = async () => {
       asset: [
         {
           "@assetType": "ssishEvent",
-          "walletHash": reservationId,
+          "walletHash": walletIdHash,
           "eventType": "DID registrado como emissor",
           "timestamp": new Date().toISOString(),
           "eventDetails": "DID Público foi registrado como emissor."
