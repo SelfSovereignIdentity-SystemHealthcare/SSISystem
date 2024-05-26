@@ -12,6 +12,15 @@ export const useReservationStore = defineStore('reservation', () => {
   const reservationId: Ref<string | null> = ref(null);
   const walletIdHash: Ref<string | null> = ref(null);
 
+  function setEmail(email: string) {
+    sessionStorage.setItem('email', email); // Use sessionStorage se preferir
+  }
+
+  function getEmail() {
+    return sessionStorage.getItem('email');//reservationId.value;
+  }
+
+
   function setWalletIdHash(id: string) {
     walletIdHash.value = id;
     sessionStorage.setItem('walletIdHash', id); // Use sessionStorage se preferir
@@ -223,7 +232,9 @@ export const useReservationStore = defineStore('reservation', () => {
     setWalletIdHash,
     loadReservationId,
     clearReservationId,
-    getWalletIdHash // Adicionando o getter aqui
+    getWalletIdHash, // Adicionando o getter aqui
+    setEmail,
+    getEmail
   };
 });
 

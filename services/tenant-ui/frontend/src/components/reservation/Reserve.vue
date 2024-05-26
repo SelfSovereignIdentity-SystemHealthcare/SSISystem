@@ -326,7 +326,7 @@ const handleSubmit = async (event: any) => {
       : undefined;
 
     // Dentro do bloco handleSubmit, após receber o reservation_id
-    //globalReservationId.setReservationId(gerarHashSHA256(res.reservation_id)) //(res.reservation_id); // Defina o reservationId no store global
+    globalReservationId.setEmail(emailAddress); //(res.reservation_id); // Defina o reservationId no store global
     // Register the reservation in the new blockchain with walletId
     //await registerOnBlockchain(gerarHashSHA256(res.reservation_id), tenantName, emailAddress, contextData);
   } catch (err) {

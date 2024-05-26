@@ -13,9 +13,9 @@ import MyInvitations from '@/views/connections/MyInvitations.vue';
 import MyIssuedCredentials from '@/views/issuance/MyIssuedCredentials.vue';
 import Schemas from '@/views/issuance/Schemas.vue';
 import CredentialDefinitions from '@/views/issuance/CredentialDefinitions.vue';
-// // Verifictation
+// Verifictation
 import MyPresentations from '@/views/verification/MyPresentations.vue';
-// // Holder
+// Holder
 import MyHeldCredentials from '@/views/holder/MyHeldCredentials.vue';
 // Messages
 import MyMessages from '@/views/messages/MyMessages.vue';
@@ -23,6 +23,17 @@ import MyMessages from '@/views/messages/MyMessages.vue';
 import Oca from '@/views/oca/Oca.vue';
 // API Keys
 import ApiKeys from '@/views/ApiKeys.vue';
+// Blockchain Event Management
+import RegisterExam from '@/views/blockchain/exam/RegisterExam.vue';
+import UpdateExam from '@/views/blockchain/exam/UpdateExam.vue';
+import ListExams from '@/views/blockchain/exam/ListExams.vue';
+import RegisterDiagnosis from '@/views/blockchain/diagnosis/RegisterDiagnosis.vue';
+import ListDiagnoses from '@/views/blockchain/diagnosis/ListDiagnoses.vue';
+import RegisterTreatment from '@/views/blockchain/treatment/RegisterTreatment.vue';
+import ListTreatments from '@/views/blockchain/treatment/ListTreatments.vue';
+import ListSSISHEvents from '@/views/blockchain/ListSSISHEvents.vue';
+import MyVerifiableCredentials from '@/views/blockchain/MyVerifiableCredentials.vue';
+import MyWallet from '@/views/blockchain/MyWallet.vue';
 // Const
 import { RESERVATION_STATUS_ROUTE } from '@/helpers/constants';
 
@@ -151,6 +162,58 @@ const tenantRoutes = [
         path: 'authentications/keys',
         name: 'ApiKeys',
         component: ApiKeys,
+      },
+
+      // Blockchain Event Management
+      {
+        path: '/blockchain/exam/register-exam',
+        name: 'RegisterExam',
+        component: RegisterExam,
+      },
+      {
+        path: '/blockchain/exam/update-exam',
+        name: 'UpdateExam',
+        component: UpdateExam,
+      },
+      {
+        path: '/blockchain/exam/list-exams',
+        name: 'ListExams',
+        component: ListExams,
+      },
+      {
+        path: '/blockchain/diagnosis/register-diagnosis',
+        name: 'RegisterDiagnosis',
+        component: RegisterDiagnosis,
+      },
+      {
+        path: '/blockchain/diagnosis/list-diagnoses',
+        name: 'ListDiagnoses',
+        component: ListDiagnoses,
+      },
+      {
+        path: '/blockchain/treatment/register-treatment',
+        name: 'RegisterTreatment',
+        component: RegisterTreatment,
+      },
+      {
+        path: '/blockchain/treatment/list-treatments',
+        name: 'ListTreatments',
+        component: ListTreatments,
+      },
+      {
+        path: '/blockchain/events-ssish',
+        name: 'ListSSISHEvents',
+        component: ListSSISHEvents,
+      },
+      {
+        path: '/blockchain/my-verifiable-credentials',
+        name: 'MyVerifiableCredentials',
+        component: MyVerifiableCredentials,
+      },
+      {
+        path: '/blockchain/my-wallet',
+        name: 'MyWallet',
+        component: MyWallet,
       },
     ],
   },

@@ -110,6 +110,9 @@ function gerarHashSHA256(email: string) {
  */
 const registerOnBlockchain = async (walletIdHash: string, walletId: string) => {
   const timestamp = new Date().toISOString();
+
+  var emailAddress = globalReservationId.getEmail();
+
   const blockchainData = [
     {
       "@assetType": "ssishEvent",
@@ -120,7 +123,8 @@ const registerOnBlockchain = async (walletIdHash: string, walletId: string) => {
     },
     {
       "@assetType": "wallet",
-      "holderHash": walletIdHash
+      "holderHash": walletIdHash,
+      "email": emailAddress
     },
     {
       "@assetType": "did",

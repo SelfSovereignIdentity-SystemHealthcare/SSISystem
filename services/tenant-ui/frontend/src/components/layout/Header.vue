@@ -7,7 +7,7 @@
 
       <div style="display: flex; align-items: center; color: rgb(1, 122, 167); font-family: Poppins, sans-serif;">
         <img src="../../IconeBlockchainSSI.png" alt="SSI Icon" style="padding-right: 10px;height: 50px; margin-bottom: 1px;" />
-        <span>Self Sovereign Identity System for Healthcare</span>
+        <b>Self Sovereign Identity System for Healthcare</b>
         <br/>
         <p style="padding-left: 10px; font-size: 75%; color: black;">TCC Matheus Lázaro - Ciência da Computação - INF UFG</p>
       </div>

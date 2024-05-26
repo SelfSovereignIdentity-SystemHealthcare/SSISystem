@@ -4,36 +4,37 @@
   <div class="wrap">
     <div class="app">
       <div class="dashboard-title">
-        <span class="text-900">Gerenciamento de Eventos na Blockchain</span>
+        <h1>Dashboard</h1>
       </div>
       <div class="dashboard">
         <div class="dashboard-row">
           <div class="category-block">
             <b class="block-title">Exame</b>
             <i style="color:black;" class="fas fa-vial"></i>
-            <Button label="Registrar Exame" @click="navigateTo('/registrar-exame')" class="category-button" />
-            <Button label="Listar Exames" @click="navigateTo('/listar-exames')" class="category-button" />
+            <Button label="Registrar Exame" @click="navigateTo('/blockchain/exam/register-exam')" class="category-button" />
+            <Button label="Atualizar Exame" @click="navigateTo('/blockchain/exam/update-exam')" class="category-button" />
+            <Button label="Listar Exames" @click="navigateTo('/blockchain/exam/list-exams')" class="category-button" />
           </div>
           <div class="category-block">
             <b class="block-title">Diagnóstico</b>
             <i style="color:black;" class="fas fa-diagnoses"></i>
-            <Button label="Registrar Diagnóstico" @click="navigateTo('/registrar-diagnostico')" class="category-button" />
-            <Button label="Listar Diagnósticos" @click="navigateTo('/listar-diagnosticos')" class="category-button" />
+            <Button label="Registrar Diagnóstico" @click="navigateTo('/blockchain/diagnosis/register-diagnosis')" class="category-button" />
+            <Button label="Listar Diagnósticos" @click="navigateTo('/blockchain/diagnosis/list-diagnoses')" class="category-button" />
           </div>
         </div>
         <div class="dashboard-row">
           <div class="category-block">
             <b class="block-title">Tratamento</b>
             <i style="color:black;" class="fas fa-pills"></i>
-            <Button label="Registrar Tratamento" @click="navigateTo('/registrar-tratamento')" class="category-button" />
-            <Button label="Listar Tratamentos" @click="navigateTo('/listar-tratamentos')" class="category-button" />
+            <Button label="Registrar Tratamento" @click="navigateTo('/blockchain/treatment/register-treatment')" class="category-button" />
+            <Button label="Listar Tratamentos" @click="navigateTo('/blockchain/treatment/list-treatments')" class="category-button" />
           </div>
           <div class="other-category-block">
             <b class="block-title">Outras opções</b>
             <i style="color:black;" class="fas fa-list"></i>
-            <Button label="Listar Eventos do Sistema" @click="navigateTo('/eventos')" class="other-category-button" />
-            <Button label="Minhas Credenciais Verificáveis" @click="navigateTo('/credenciais')" class="other-category-button" />
-            <Button label="Minha Carteira e IDD" @click="navigateTo('/carteira')" class="other-category-button" />
+            <Button label="Listar Eventos do Sistema" @click="navigateTo('/blockchain/events-ssish')" class="other-category-button" />
+            <Button label="Minhas Credenciais Verificáveis" @click="navigateTo('/blockchain/my-verifiable-credentials')" class="other-category-button" />
+            <Button label="Minha Carteira e IDD" @click="navigateTo('/blockchain/my-wallet')" class="other-category-button" />
           </div>
         </div>
       </div>
@@ -162,7 +163,7 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #007bff;
+        background-color: #bcdcff;
         padding: 1rem;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -200,7 +201,7 @@ body {
         }
       }
       .other-category-block {
-        background-color: #6f4e37;
+        background-color: #675c55;
       }
     }
   }
