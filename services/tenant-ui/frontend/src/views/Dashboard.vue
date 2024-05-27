@@ -12,7 +12,7 @@
             <b class="block-title">Exame</b>
             <i style="color:black;" class="fas fa-vial"></i>
             <Button label="Registrar Exame" @click="navigateTo('/blockchain/exam/register-exam')" class="category-button" />
-            <Button label="Atualizar Exame" @click="navigateTo('/blockchain/exam/update-exam')" class="category-button" />
+            <!-- <Button label="Atualizar Exame" @click="navigateTo('/blockchain/exam/update-exam')" class="category-button" /> -->
             <Button label="Listar Exames" @click="navigateTo('/blockchain/exam/list-exams')" class="category-button" />
           </div>
           <div class="category-block">
@@ -34,7 +34,8 @@
             <i style="color:black;" class="fas fa-list"></i>
             <Button label="Listar Eventos do Sistema" @click="navigateTo('/blockchain/events-ssish')" class="other-category-button" />
             <Button label="Minhas Credenciais Verificáveis" @click="navigateTo('/blockchain/my-verifiable-credentials')" class="other-category-button" />
-            <Button label="Minha Carteira e IDD" @click="navigateTo('/blockchain/my-wallet')" class="other-category-button" />
+            <Button label="Minhas Verificações de Credenciais Verificáveis" @click="navigateTo('/blockchain/my-credential-verifications')" class="other-category-button" />
+            <Button label="Minha Carteira" @click="navigateTo('/blockchain/my-wallet')" class="other-category-button" />
           </div>
         </div>
       </div>
@@ -201,7 +202,7 @@ body {
         }
       }
       .other-category-block {
-        background-color: #675c55;
+        background-color: #a69186;
       }
     }
   }

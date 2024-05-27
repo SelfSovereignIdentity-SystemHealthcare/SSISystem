@@ -7,7 +7,21 @@
                 <p><strong>Email do Paciente:</strong> {{ exam.patientName }}</p>
                 <p><strong>Email do Médico:</strong> {{ exam.doctorName }}</p>
                 <p><strong>Data:</strong> {{ formatTimestamp(exam.timestamp) }}</p>
-                <p><strong>Documento do Exame:</strong>: {{ exam.urlExamDocument }} <a :href="getExamDocumentUrl(exam.urlExamDocument)" target="_blank">Abrir servidor de arquivos</a></p>
+                <p v-if="exam.diagnosis">
+                    <strong>Diagnóstico:</strong> {{ exam.diagnosis.name }}
+                </p>
+                <p v-else>
+                    <strong>Diagnóstico:</strong> Não disponível
+                </p>
+                <p v-if="exam.treatment">
+                    <strong>Tratamento:</strong> {{ exam.treatment.name }}
+                </p>
+                <p v-else>
+                    <strong>Tratamento:</strong> Não disponível
+                </p>
+                <p><strong>Documento do Exame:</strong> {{ exam.urlExamDocument }} <a
+                        :href="getExamDocumentUrl(exam.urlExamDocument)" target="_blank">Abrir servidor de arquivos</a></p>
+                <Button label="Editar" @click="editExam(exam['@key'])"></Button>
             </div>
         </div>
         <div v-else>
@@ -19,14 +33,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios, { AxiosResponse } from 'axios';
+import { useRouter } from 'vue-router';
 import { useReservationStore } from '@/store'; // Importe o store global
+import Button from 'primevue/button';
 
 const reservationStore = useReservationStore();
 const walletIdHash = reservationStore.getWalletIdHash();
-const exams = ref<any[]>([]); // Definindo o tipo do array como any[]
+const exams = ref<any[]>([]);
+const router = useRouter();
 
 const getExamDocumentUrl = (documentPath: string): string => {
-    return `http://localhost:9001`;
+    return `http://localhost:9001${documentPath}`;
 };
 
 const loadExams = async () => {
@@ -48,10 +65,16 @@ const loadExams = async () => {
 
         const examsData = response.data.result;
 
-        // Fetch patient and doctor names
         for (const exam of examsData) {
             exam.patientName = await getPatientName(exam.patientWalletHolderHash);
             exam.doctorName = await getDoctorName(exam.doctorWalletHolderHash);
+
+            if (exam.diagnosisHash) {
+                exam.diagnosis = await getDiagnosis(exam.diagnosisHash);
+            }
+            if (exam.treatmentHash) {
+                exam.treatment = await getTreatment(exam.treatmentHash);
+            }
         }
 
         exams.value = examsData;
@@ -60,7 +83,7 @@ const loadExams = async () => {
     }
 };
 
-const getPatientName = async (patientWalletHolderHash: string): Promise<string> => { 
+const getPatientName = async (patientWalletHolderHash: string): Promise<string> => {
     try {
         const response: AxiosResponse<any> = await axios.post('http://localhost:80/api/query/readAsset', {
             key: {
@@ -75,7 +98,7 @@ const getPatientName = async (patientWalletHolderHash: string): Promise<string> 
     }
 };
 
-const getDoctorName = async (doctorWalletHolderHash: string): Promise<string> => { 
+const getDoctorName = async (doctorWalletHolderHash: string): Promise<string> => {
     try {
         const response: AxiosResponse<any> = await axios.post('http://localhost:80/api/query/readAsset', {
             key: {
@@ -90,8 +113,42 @@ const getDoctorName = async (doctorWalletHolderHash: string): Promise<string> =>
     }
 };
 
-const formatTimestamp = (timestamp: string): string => { 
+const getDiagnosis = async (diagnosisHash: string): Promise<any> => {
+    try {
+        const response: AxiosResponse<any> = await axios.post('http://localhost:80/api/query/readAsset', {
+            key: {
+                "@assetType": "diagnosis",
+                "@key": diagnosisHash
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const getTreatment = async (treatmentHash: string): Promise<any> => {
+    try {
+        const response: AxiosResponse<any> = await axios.post('http://localhost:80/api/query/readAsset', {
+            key: {
+                "@assetType": "treatment",
+                "@key": treatmentHash
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const formatTimestamp = (timestamp: string): string => {
     return new Date(timestamp).toLocaleString();
+};
+
+const editExam = (examId: string) => {
+    router.push({ name: 'UpdateExam', params: { examId } });
 };
 
 onMounted(() => {

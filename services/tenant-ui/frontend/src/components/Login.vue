@@ -42,6 +42,7 @@
               >
             </p>
 
+            <!--
             <p>
               {{ $t('login.submittedRequest') }}
               <a
@@ -51,6 +52,7 @@
                 >{{ $t('login.checkStatus') }}</a
               >
             </p>
+            -->
           </div>
         </div>
 

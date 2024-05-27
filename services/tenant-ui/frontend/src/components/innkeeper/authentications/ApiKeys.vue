@@ -41,7 +41,7 @@
       <Column
         sortable
         field="name"
-        header="Tenant Name"
+        header="Nome"
         filter-field="name"
         :show-filter-match-modes="false"
       >

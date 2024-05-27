@@ -22,6 +22,8 @@
             <FileUpload name="urlExamDocument" chooseLabel="Escolher Arquivo" @select="handleFileSelect" />
         </div>
 
+        <Message severity="info">Tratamento e Diagnóstico deverão ser cadastrados em Dashboard->Exame->Listar Exames->Editar</Message>
+        <!--
         <div class="form-field">
             <label for="diagnosisHash">Hash do Diagnóstico</label>
             <InputText id="diagnosisHash" v-model="form.diagnosisHash" placeholder="Digite o hash do diagnóstico" />
@@ -31,7 +33,7 @@
             <label for="treatmentHash">Hash do Tratamento</label>
             <InputText id="treatmentHash" v-model="form.treatmentHash" placeholder="Digite o hash do tratamento" />
         </div>
-
+        -->
         <Button type="submit" label="Registrar Exame" class="submit-button" />
     </form>
 </template>
@@ -44,6 +46,7 @@ import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import axios from 'axios';
 import FileUpload from 'primevue/fileupload';
+import Message from 'primevue/message';
 
 const toast = useToast();
 

@@ -98,7 +98,10 @@ import { useConnectionStore, useVerifierStore } from '@/store';
 // Other imports
 import JsonEditorVue from 'json-editor-vue';
 import { JSON_EDITOR_DEFAULTS } from '@/helpers/constants';
+import { useReservationStore } from '@/store'; // Importe o store global
 
+const reservationStore = useReservationStore();
+const walletIdHash = reservationStore.getWalletIdHash();
 const toast = useToast();
 
 // Store values
@@ -207,10 +210,30 @@ const handleSubmit = async (isFormValid: boolean) => {
     emit('success');
     // close up on success
     emit('closed');
+    
+    // Prepare data for createAsset request
+    const assetData = {
+      "@assetType": "credentialVerification",
+      "verifierHash": walletIdHash,
+      "verification": formFields.comment,
+      "timestamp": new Date().toISOString(),
+      "result": "registrado" // Aqui você pode colocar o valor desejado ou pegá-lo de algum lugar do formulário
+    };
+
+    // Request to createAsset
+    const createAssetResponse = await fetch('http://localhost/api/invoke/createAsset', {
+      method: 'POST',
+      body: JSON.stringify({ asset: [assetData] })
+    });
+
+    const createAssetData = await createAssetResponse.json();
+    console.log(createAssetData); // Saída do exemplo fornecido
   } catch (error) {
     toast.error(`Failure: ${error}`);
   } finally {
     submitted.value = false;
   }
 };
+
 </script>
+

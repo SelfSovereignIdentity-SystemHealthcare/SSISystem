@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="handleSubmit(!v$.$invalid)">
     <TabView v-model:active-index="activeTab" class="tab-container">
-      <TabPanel header="Wallet Credentials">
+      <TabPanel header="Credenciais de carteira">
         <div class="field mt-5 w-full">
           <!-- ID -->
           <label
@@ -48,9 +48,9 @@
         </div>
       </TabPanel>
 
+      <!--
       <TabPanel header="API Key">
         <div class="field mt-5 w-full">
-          <!-- Tenant ID -->
           <label
             for="tenant-id"
             :class="{ 'p-error': v$.tenantId.$invalid && submitted }"
@@ -73,7 +73,6 @@
         </div>
 
         <div class="field mt-5 w-full">
-          <!-- API Key -->
           <label
             for="api-key"
             :class="{ 'p-error': v$.apiKey.$invalid && submitted }"
@@ -94,6 +93,7 @@
           }}</small>
         </div>
       </TabPanel>
+       -->
     </TabView>
 
     <Button

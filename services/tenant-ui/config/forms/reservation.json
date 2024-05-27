@@ -13,7 +13,7 @@
       {
         "type": "Control",
         "scope": "#/properties/organization",
-        "label": "Company/organization "
+        "label": "Organização"
       }
     ]
   }

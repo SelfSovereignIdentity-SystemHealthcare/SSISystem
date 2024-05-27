@@ -33,6 +33,7 @@ import RegisterTreatment from '@/views/blockchain/treatment/RegisterTreatment.vu
 import ListTreatments from '@/views/blockchain/treatment/ListTreatments.vue';
 import ListSSISHEvents from '@/views/blockchain/ListSSISHEvents.vue';
 import MyVerifiableCredentials from '@/views/blockchain/MyVerifiableCredentials.vue';
+import MyCredentialVerifications from '@/views/blockchain/MyCredentialVerifications.vue';
 import MyWallet from '@/views/blockchain/MyWallet.vue';
 // Const
 import { RESERVATION_STATUS_ROUTE } from '@/helpers/constants';
@@ -171,9 +172,10 @@ const tenantRoutes = [
         component: RegisterExam,
       },
       {
-        path: '/blockchain/exam/update-exam',
+        path: '/blockchain/exam/update-exam/:examId',
         name: 'UpdateExam',
         component: UpdateExam,
+        props: true
       },
       {
         path: '/blockchain/exam/list-exams',
@@ -209,6 +211,11 @@ const tenantRoutes = [
         path: '/blockchain/my-verifiable-credentials',
         name: 'MyVerifiableCredentials',
         component: MyVerifiableCredentials,
+      },
+      {
+        path: '/blockchain/my-credential-verifications',
+        name: 'MyCredentialVerifications',
+        component: MyCredentialVerifications,
       },
       {
         path: '/blockchain/my-wallet',
