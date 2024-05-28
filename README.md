@@ -23,11 +23,11 @@ Local Médico: Dr. Sérgio
 fc52738c-be63-4eda-a20d-a093c5bfb3d8
 
 Local Paciente: Matheus Lázaro
-b6ffa884-fe96-4a60-8aba-7dab8c333ff4
-793d1e8b-05d4-4f35-9883-5153b92e4d35
+e2f43c34-bb5c-43d8-964b-a11d86329e8e
+d2e02a4c-5985-4a6c-8937-923aa539c678
 
-b112c1ba-15c6-4786-b623-b1348004f6ae
-527ecc51-d8f5-4358-b30f-f28d2da819de
+4ed383ec-a2ee-4d6c-b7b8-47920a8a689e
+4df6f7a2-43da-4b5c-b3cc-7749ca169d53
 
 walletIdHash: 1952b22123f7847b88f690cb6acd017a49f27e615ad10ec40ec3d0998e2b5bec
 
@@ -55,7 +55,7 @@ JSON de credencial de identificação de Paciente:
         "ver": 
         "1.0",
         "id": 
-        "3MsnmYmYXcK316jNxKMG5u:2:Esquema de credencial para Identificação de Paciente - SSISH:1.0",
+        "d2e02a4c-5985-4a6c-8937-923aa539c678",
         "name": 
         "Esquema de credencial para Identificação de Paciente - SSISH",
         "version": 

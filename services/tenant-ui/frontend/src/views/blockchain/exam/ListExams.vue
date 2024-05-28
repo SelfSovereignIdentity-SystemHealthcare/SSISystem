@@ -43,7 +43,7 @@ const exams = ref<any[]>([]);
 const router = useRouter();
 
 const getExamDocumentUrl = (documentPath: string): string => {
-    return `http://localhost:9001${documentPath}`;
+    return `http://localhost:9001`;
 };
 
 const loadExams = async () => {
