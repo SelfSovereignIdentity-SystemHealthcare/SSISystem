@@ -5,7 +5,7 @@
         <div class="pt-4 pb-6">
           <h2 style="color=#6f4e37;" class="text-center mt-4 mb-2 font-bold">Self Sovereign Identity System for Healthcare</h2>
           <p style="color=#6f4e37;" class="text-center mb-2 font-bold">SSISH</p>
-          <p class="text-center mb-2 font-bold">TCC - Matheus Lázaro - Ciência da Computação - INF UFG</p>
+          <p class="text-center mb-2 font-bold">Matheus Lázaro - Ciência da Computação - INF UFG</p>
           <img src="/img/bc/bc_logo.png" class="logo-bc" />
         </div>
 
