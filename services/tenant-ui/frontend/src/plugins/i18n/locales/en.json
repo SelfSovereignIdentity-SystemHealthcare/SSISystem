@@ -240,14 +240,14 @@
   "dashboard": {
     "backToDashboard": "Voltar ao Painel",
     "dashboard": "Dashboard",
-    "greeting": "Self Sovereign Identity System for Healthcare - TCC Matheus Lázaro - Ciência da Computação - INF UFG"
+    "greeting": "Self Sovereign Identity System for Healthcare - Matheus Lázaro - Ciência da Computação - INF UFG"
   },
   "holder": {
     "holder": "Detentor"
   },
   "home": {
     "dashboard": "Painel",
-    "greeting": "Self Sovereign Identity System for Healthcare - TCC Matheus Lázaro - Ciência da Computação - INF UFG",
+    "greeting": "Self Sovereign Identity System for Healthcare - Matheus Lázaro - Ciência da Computação - INF UFG",
     "login": {
       "id": "ID da Carteira",
       "secret": "Chave da Carteira",
