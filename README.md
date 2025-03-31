@@ -1,5 +1,5 @@
 # SSISH - Self Sovereign Identity System for Healthcare
-Sistema de Gerenciamento de Identidade Digital Descentralizada Autossoberana Self Sovereign Identity SSISH - INF UFG  TCC - Matheus Lázaro - Ciência da Computação
+Sistema de Gerenciamento de Identidade Digital Descentralizada Autossoberana Self Sovereign Identity SSISH - By Matheus Lázaro
 
 <p align="center">
   <img src="./docs/assets/readme-logo.png" width="150px">
